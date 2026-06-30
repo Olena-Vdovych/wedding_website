@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+/* Це вказує Tailwind v4, де шукати класи вашого весільного сайту */
+@source "../index.html";
+@source "./**/*.{js,ts,jsx,tsx}";
