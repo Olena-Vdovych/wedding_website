@@ -5,7 +5,7 @@ import {
     MapPin,
     Shirt,
     Clock,
-    CheckCircle2
+    CheckCircle2,
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
 import ScrollReveal from "./ScrollReveal";
@@ -43,7 +43,7 @@ const translations = {
             "1 (Я прийду сам/один)",
             "2 (Я + 1)",
             "3 (Я + 2)",
-            "4 (Родина / група)"
+            "4 (Родина / група)",
         ],
         guestsNamesLabel: "Імена ваших супутників (+1 / діти)",
         guestsNamesPlaceholder: "Наприклад: Іван (чоловік), Софія (донька 5 років)",
@@ -83,7 +83,7 @@ const translations = {
             "1 (Alleen ik)",
             "2 (Ik + 1)",
             "3 (Ik + 2)",
-            "4 (Gezin / groep)"
+            "4 (Gezin / groep)",
         ],
         guestsNamesLabel: "Namen van uw partner / kinderen",
         guestsNamesPlaceholder: "Bijv: Jan (partner), Sophie (dochter 5 jaar)",
@@ -114,11 +114,32 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
     const t = translations[lang] || translations.ua;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("RSVP Data submitted:", formData);
-        setSubmitted(true);
+        setLoading(true);
+
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors", // важливо для Google Apps Script
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            setSubmitted(true);
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const GOOGLE_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbz5yKZq4rLg3cfUBuksKv0zZQiwz5ftHJ7B2nQnQoCYfyskzOsIVXyoezmHRJcYCvx1/exec";
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="min-h-screen bg-[#FAF7F2] text-[#4A3E3D] font-sans antialiased selection:bg-[#E6D5BC]">
@@ -383,7 +404,9 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-sm font-medium text-[#4A3E3D]">{t.nameLabel}</label>
+                                <label className="text-sm font-medium text-[#4A3E3D]">
+                                    {t.nameLabel}
+                                </label>
                                 <input
                                     type="text"
                                     required
@@ -402,11 +425,10 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                                 <div className="grid grid-cols-2 gap-3">
                                     <button
                                         type="button"
-                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${
-                                            formData.attending === "yes"
+                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${formData.attending === "yes"
                                                 ? "bg-[#C17A63] text-white border-[#C17A63]"
                                                 : "bg-[#FAF7F2] border-[#E6D5BC] text-[#4A3E3D]"
-                                        }`}
+                                            }`}
                                         onClick={() =>
                                             setFormData({ ...formData, attending: "yes" })
                                         }
@@ -415,11 +437,10 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                                     </button>
                                     <button
                                         type="button"
-                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${
-                                            formData.attending === "no"
+                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${formData.attending === "no"
                                                 ? "bg-[#C17A63] text-white border-[#C17A63]"
                                                 : "bg-[#FAF7F2] border-[#E6D5BC] text-[#4A3E3D]"
-                                        }`}
+                                            }`}
                                         onClick={() =>
                                             setFormData({ ...formData, attending: "no" })
                                         }
@@ -477,7 +498,9 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                             )}
 
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-sm font-medium text-[#4A3E3D]">{t.dietLabel}</label>
+                                <label className="text-sm font-medium text-[#4A3E3D]">
+                                    {t.dietLabel}
+                                </label>
                                 <textarea
                                     rows="2"
                                     placeholder={t.dietPlaceholder}
@@ -491,9 +514,10 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
                             <button
                                 type="submit"
-                                className="w-full bg-[#C17A63] text-white py-3 rounded-lg font-medium shadow-md hover:bg-[#A9644F] transition tracking-wider uppercase text-xs"
+                                disabled={loading}
+                                className="w-full bg-[#C17A63] text-white py-3 rounded-lg font-medium shadow-md hover:bg-[#A9644F] transition tracking-wider uppercase text-xs disabled:opacity-50"
                             >
-                                {t.submitBtn}
+                                {loading ? "Sending..." : t.submitBtn}
                             </button>
                         </form>
                     )}
