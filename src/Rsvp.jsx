@@ -16,7 +16,8 @@ const translations = {
         addChildBtn: "+ Додати дитину",
         childName: "Ім'я дитини",
         childAge: "Вік (років)",
-        dietLabel: "Харчові обмеження або алергії (необов'язково)",
+        dietLabelFull: "Харчові обмеження або алергії (необов'язково)",
+        dietLabelParty: "Особливі побажання щодо напоїв або алергії (необов'язково)",
         submitBtn: "Надіслати відповідь",
         successMsg: "Дякуємо! Вашу відповідь успішно надіслано ❤️"
     },
@@ -34,7 +35,8 @@ const translations = {
         addChildBtn: "+ Kind toevoegen",
         childName: "Naam van het kind",
         childAge: "Leeftijd (jaar)",
-        dietLabel: "Dieetwensen of allergieën (optioneel)",
+        dietLabelFull: "Dieetwensen of allergieën (optioneel)",
+        dietLabelParty: "Speciale drankwensen of allergieën (optioneel)",
         submitBtn: "Antwoord versturen",
         successMsg: "Bedankt! Uw antwoord is succesvol verzonden ❤️"
     },
@@ -52,7 +54,8 @@ const translations = {
         addChildBtn: "+ Kind hinzufügen",
         childName: "Name des Kindes",
         childAge: "Alter (Jahre)",
-        dietLabel: "Diätetische Einschränkungen oder Allergien (optional)",
+        dietLabelFull: "Diätetische Einschränkungen oder Allergien (optional)",
+        dietLabelParty: "Besondere Getränkewünsche oder Allergien (optional)",
         submitBtn: "Antwort senden",
         successMsg: "Vielen Dank! Ihre Antwort wurde erfolgreich gesendet ❤️"
     }
@@ -60,6 +63,10 @@ const translations = {
 
 export default function Rsvp({ lang = 'ua' }) {
     const t = translations[lang] || translations.ua;
+
+    // Зчитуємо параметр вечірнього гостя
+    const searchParams = new URLSearchParams(window.location.search);
+    const isPartyOnly = searchParams.get('type') === 'party';
 
     const [formData, setFormData] = useState({
         name: '',
@@ -71,17 +78,14 @@ export default function Rsvp({ lang = 'ua' }) {
     const [children, setChildren] = useState([{ name: '', age: '' }]);
     const [submitted, setSubmitted] = useState(false);
 
-    // Додати нове поле для дитини
     const addChild = () => {
         setChildren([...children, { name: '', age: '' }]);
     };
 
-    // Видалити поле дитини
     const removeChild = (index) => {
         setChildren(children.filter((_, i) => i !== index));
     };
 
-    // Зміна даних дитини
     const handleChildChange = (index, field, value) => {
         const updated = [...children];
         updated[index][field] = value;
@@ -91,8 +95,8 @@ export default function Rsvp({ lang = 'ua' }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Тут формуються підсумкові дані
         const finalData = {
+            guestType: isPartyOnly ? 'Party Guest (Evening)' : 'Full Day Guest',
             ...formData,
             children: formData.hasChildren === 'yes' ? children : []
         };
@@ -166,9 +170,10 @@ export default function Rsvp({ lang = 'ua' }) {
                         </div>
                     </div>
 
-                    {/* Якщо прийде — запитуємо про дітей */}
+                    {/* Додаткові поля, якщо гість прийде */}
                     {formData.attending === 'yes' && (
                         <>
+                            {/* Діти */}
                             <div>
                                 <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
                                     {t.hasChildrenLabel}
@@ -197,7 +202,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                 </div>
                             </div>
 
-                            {/* Секція додавання дітей */}
+                            {/* Деталі про дітей */}
                             {formData.hasChildren === 'yes' && (
                                 <div className="p-4 bg-[#FAF7F2] rounded-xl border border-[#E6D5BC]/60 space-y-4">
                                     <h4 className="text-xs font-medium uppercase tracking-wider text-[#3D3433]">
@@ -246,10 +251,10 @@ export default function Rsvp({ lang = 'ua' }) {
                                 </div>
                             )}
 
-                            {/* Особливі дієтичні побажання */}
+                            {/* Адаптивне поле алергій/побажань */}
                             <div>
                                 <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
-                                    {t.dietLabel}
+                                    {isPartyOnly ? t.dietLabelParty : t.dietLabelFull}
                                 </label>
                                 <textarea
                                     rows={2}

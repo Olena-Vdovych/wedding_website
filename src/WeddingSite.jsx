@@ -9,7 +9,7 @@ import {
     Camera,
     Utensils,
     Users,
-    Cake, 
+    Cake,
     Music
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
@@ -87,6 +87,10 @@ const colors = [
 
 export default function WeddingSite({ lang = "ua", setLang }) {
     const t = translations[lang] || translations.ua;
+
+    // Зчитуємо параметр ?type=party з посилання
+    const searchParams = new URLSearchParams(window.location.search);
+    const isPartyOnly = searchParams.get('type') === 'party';
 
     return (
         <div className="min-h-screen bg-[#FAF7F2] text-[#4A3E3D] font-sans antialiased selection:bg-[#E6D5BC]">
@@ -188,7 +192,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
             </ScrollReveal>
 
             {/* PROGRAM (TIMELINE) */}
-{/* 
+            {/* 
   ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
   14:00 - 14:30 | Збір гостей
   14:30 - 15:15 | Церемонія
@@ -209,43 +213,52 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     {
                         time: "14:00",
                         title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі",
-                        icon: GlassWater
+                        icon: GlassWater,
+                        forPartyOnly: false
                     },
                     {
                         time: "14:30",
                         title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску",
-                        icon: Heart
+                        icon: Heart,
+                        forPartyOnly: false
                     },
                     {
                         time: "15:15",
                         title: lang === "de" ? "Glückwünsche, Fotos & Borrel" : lang === "nl" ? "Felicitaties, foto's & Borrel" : "Привітання, спільні фото & Borrel",
-                        icon: Camera
+                        icon: Camera,
+                        forPartyOnly: false
                     },
                     {
                         time: "17:30",
                         title: lang === "de" ? "Festliches Strand-BBQ" : lang === "nl" ? "Feestelijk Beach BBQ" : "Святковий Beach BBQ",
-                        icon: Utensils
+                        icon: Utensils,
+                        forPartyOnly: false
                     },
                     {
                         time: "20:00",
                         title: lang === "de" ? "Empfang der Abendgäste" : lang === "nl" ? "Ontvangst avondgasten" : "Збір вечірніх гостей",
-                        icon: Users
+                        icon: Users,
+                        forPartyOnly: true
                     },
                     {
                         time: "20:30",
                         title: lang === "de" ? "Anschnitt der Hochzeitstorte" : lang === "nl" ? "Aansnijden van de bruidstaart" : "Урочистий торт",
-                        icon: Cake
+                        icon: Cake,
+                        forPartyOnly: true
                     },
                     {
                         time: "20:45",
                         title: lang === "de" ? "Eröffnungstanz & Party" : lang === "nl" ? "Openingsdans & Feest" : "Перший танець & Вечірка",
-                        icon: Music
+                        icon: Music,
+                        forPartyOnly: true
                     },
-                ].map((item, index) => {
+                ]
+                // Фільтруємо: якщо це вечірній гість, залишаємо лише вечірні події
+                .filter(item => isPartyOnly ? item.forPartyOnly : true)
+                .map((item, index) => {
                     const IconComponent = item.icon;
                     return (
                         <div key={index} className="relative pl-8 md:pl-10 group">
-                            {/* Анімована іконка замість кружечка */}
                             <div className="absolute -left-[17px] top-0.5 bg-[#FAF7F2] p-1.5 border border-[#C17A63] rounded-full text-[#C17A63] shadow-sm transition-transform duration-300 group-hover:scale-125">
                                 <IconComponent size={16} className="animate-pulse" />
                             </div>
