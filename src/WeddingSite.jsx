@@ -256,6 +256,12 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                         icon: Music,
                         forPartyOnly: true
                     },
+                    {
+                        time: "00:00",
+                        title: lang === "de" ? "Abschluss der Feier" : lang === "nl" ? "Afsluiting van de feest" : "Завершення святкування",
+                        icon: Clock,
+                        forPartyOnly: true
+                    }
                 ]
                 // Фільтруємо: якщо це вечірній гість, залишаємо лише вечірні події
                 .filter(item => isPartyOnly ? item.forPartyOnly : true)
