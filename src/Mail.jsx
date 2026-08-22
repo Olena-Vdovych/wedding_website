@@ -4,15 +4,19 @@ import { Mail } from "lucide-react";
 function MailScreen({ onOpen, lang }) {
     // Переклади суто для екрана з конвертом
     const text = {
-        ua: {
-            title: "Тобі надійшов лист",
-            subtitle: "Натисни на конверт, щоб відкрити його"
-        },
-        nl: {
-            title: "Je hebt een uitnodiging",
-            subtitle: "Klik op de enveloppe om hem te openen"
-        }
-    };
+    ua: {
+        title: "Тобі надійшов лист",
+        subtitle: "Натисни на конверт, щоб відкрити його"
+    },
+    nl: {
+        title: "Je hebt een uitnodiging",
+        subtitle: "Klik op de enveloppe om hem te openen"
+    },
+    de: {
+        title: "Du hast Post bekommen",
+        subtitle: "Klicke auf den Umschlag, um ihn zu öffnen"
+    }
+};
 
     return (
         <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#FAF7F2] p-4 animate-fade-in">

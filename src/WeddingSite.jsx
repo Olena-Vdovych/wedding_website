@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Heart,
     Calendar,
     MapPin,
     Shirt,
     Clock,
-    CheckCircle2,
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
 import ScrollReveal from "./ScrollReveal";
+import Rsvp from "./Rsvp";
 
 // Переклади (Контент сайту)
 const translations = {
     ua: {
         names: "Денніс & Олена",
-        date: "12 Червня 2027",
+        date: "10 Липня 2027",
         location: "Katwijk, Нідерланди",
         storyTitle: "Наша Історія",
         storyText:
@@ -31,30 +31,10 @@ const translations = {
         dressCodeTitle: "Дрес-код & Палітра",
         dressCodeText:
             "Стиль: Beach Boho Chic. Оскільки церемонія буде прямо на піску, залиште підбори вдома! Обирайте легкі тканини та зручне взуття.",
-        rsvpTitle: "Підтвердження присутності",
-        rsvpText:
-            "Будь ласка, заповніть форму до 1 травня 2027 року, щоб ми могли узгодити меню з рестораном.",
-        nameLabel: "Ваше Ім'я та Прізвище",
-        attendingLabel: "Чи зможете ви прийти?",
-        yes: "Так, з радістю!",
-        no: "Ні, на жаль не зможу",
-        guestsCountLabel: "Кількість осіб (включаючи вас)",
-        guestOptions: [
-            "1 (Я прийду сам/один)",
-            "2 (Я + 1)",
-            "3 (Я + 2)",
-            "4 (Родина / група)",
-        ],
-        guestsNamesLabel: "Імена ваших супутників (+1 / діти)",
-        guestsNamesPlaceholder: "Наприклад: Іван (чоловік), Софія (донька 5 років)",
-        dietLabel: "Дієтичні вподобання / Алергії",
-        dietPlaceholder: "Наприклад: вегетаріанець, алергія на горіхи...",
-        submitBtn: "Надіслати відповідь",
-        successMsg: "Дякуємо! Ваша відповідь успішно збережена.",
     },
     nl: {
         names: "Dennis & Olena",
-        date: "12 Juni 2027",
+        date: "10 July 2027",
         location: "Katwijk aan Zee, Nederland",
         storyTitle: "Ons Verhaal",
         storyText:
@@ -71,27 +51,24 @@ const translations = {
         dressCodeTitle: "Dresscode & Palet",
         dressCodeText:
             "Stijl: Beach Boho Chic. Omdat de ceremonie direct op het strand plaatsvindt, laat de hakken thuis! Kies voor luchtige stoffen en comfortabele schoenen.",
-        rsvpTitle: "Aanmelden (RSVP)",
-        rsvpText:
-            "Vul alstublieft het formulier in voor 1 mei 2027, zodat we het menu kunnen afstemmen met het strandpaviljoen.",
-        nameLabel: "Uw Voornaam en Achternaam",
-        attendingLabel: "Bent u aanwezig?",
-        yes: "Ja, ik ben er bij!",
-        no: "Nee, helaas kan ik niet",
-        guestsCountLabel: "Aantal personen (inclusief uzelf)",
-        guestOptions: [
-            "1 (Alleen ik)",
-            "2 (Ik + 1)",
-            "3 (Ik + 2)",
-            "4 (Gezin / groep)",
-        ],
-        guestsNamesLabel: "Namen van uw partner / kinderen",
-        guestsNamesPlaceholder: "Bijv: Jan (partner), Sophie (dochter 5 jaar)",
-        dietLabel: "Dieetwensen / Allergieën",
-        dietPlaceholder: "Bijv: vegetariër, notenallergie...",
-        submitBtn: "Antwoord versturen",
-        successMsg: "Bedankt! Je reactie is succesvol opgeslagen.",
     },
+    de: {
+        names: "Dennis & Olena",
+        date: "10 July 2027",
+        location: "Katwijk aan Zee, Niederlande",
+        storyTitle: "Unsere Geschichte",
+        storyText: "Ein Moment hat alles verändert. Eine Ukrainerin und ein Niederländer haben sich gefunden, und wir freuen uns riesig, Sie einzuladen, den Beginn unserer gemeinsamen Reise an der Nordseeküste zu feiern.",
+        programTitle: "Tagesprogramm",
+        locationTitle: "Ort & Parken",
+        venueName: "Strandpavillon «Surf and Beach»",
+        venueAddress: "Katwijk aan Zee, Niederlande",
+        parkingTitle: "Parkmöglichkeiten",
+        parkingText: "Wir empfehlen das Parken im Parkhaus 'Parkeergarage Boulevard Zeezijde' direkt am Strand. Von dort sind es nur wenige Gehminuten zum Pavillon.",
+        googleMapsBtn: "In Google Maps öffnen",
+        calendarBtn: "In Kalender eintragen",
+        dressCodeTitle: "Dresscode & Palette",
+        dressCodeText: "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lassen Sie die Stöckelschuhe bitte zu Hause! Wählen Sie luftige Stoffe und bequeme Schuhe.",
+    }
 };
 
 const colors = [
@@ -103,43 +80,7 @@ const colors = [
 ];
 
 export default function WeddingSite({ lang = "ua", setLang }) {
-    const [formData, setFormData] = useState({
-        name: "",
-        attending: "yes",
-        guestsCount: 1,
-        guestNames: "",
-        diet: "",
-    });
-    const [submitted, setSubmitted] = useState(false);
-
     const t = translations[lang] || translations.ua;
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-
-        try {
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors", // важливо для Google Apps Script
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            setSubmitted(true);
-        } catch (error) {
-            console.error("Error submitting form:", error);
-            alert("Something went wrong. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const GOOGLE_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbz5yKZq4rLg3cfUBuksKv0zZQiwz5ftHJ7B2nQnQoCYfyskzOsIVXyoezmHRJcYCvx1/exec";
-    const [loading, setLoading] = useState(false);
 
     return (
         <div className="min-h-screen bg-[#FAF7F2] text-[#4A3E3D] font-sans antialiased selection:bg-[#E6D5BC]">
@@ -252,35 +193,23 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                             {[
                                 {
                                     time: "15:30",
-                                    title:
-                                        lang === "ua"
-                                            ? "Збір гостей на терасі"
-                                            : "Ontvangst van gasten",
+                                    title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі"
                                 },
                                 {
                                     time: "16:00",
-                                    title:
-                                        lang === "ua"
-                                            ? "Весільна церемонія на піску"
-                                            : "Huwelijksceremonie op het strand",
+                                    title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску"
                                 },
                                 {
                                     time: "16:45",
-                                    title:
-                                        lang === "ua"
-                                            ? "Привітання, торт & Borrel"
-                                            : "Felicitaties, taart & Borrel",
+                                    title: lang === "de" ? "Glückwünsche, Torte & Borrel" : lang === "nl" ? "Felicitaties, taart & Borrel" : "Привітання, торт & Borrel"
                                 },
                                 {
                                     time: "18:30",
-                                    title: lang === "ua" ? "Beach BBQ Вечеря" : "Beach BBQ Diner",
+                                    title: lang === "de" ? "Strand-BBQ-Abendessen" : lang === "nl" ? "Beach BBQ Diner" : "Beach BBQ Вечеря"
                                 },
                                 {
                                     time: "21:00",
-                                    title:
-                                        lang === "ua"
-                                            ? "Багаття на піску & Танці"
-                                            : "Kampvuur & Feest",
+                                    title: lang === "de" ? "Lagerfeuer & Party" : lang === "nl" ? "Kampvuur & Feest" : "Багаття на піску & Танці"
                                 },
                             ].map((item, index) => (
                                 <div key={index} className="relative pl-6 md:pl-8">
@@ -299,7 +228,6 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     </div>
                 </section>
             </ScrollReveal>
-
             {/* VENUE & MAP SECTION */}
             <ScrollReveal>
                 <section className="max-w-5xl mx-auto px-6 py-20">
@@ -326,8 +254,9 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                {/* Динамічне посилання на Google Maps з точним місцем та мовою */}
                                 <a
-                                    href="https://maps.google.com/?q=Surf+and+Beach+Katwijk"
+                                    href={`https://www.google.com/maps/search/?api=1&query=Strandpaviljoen+Surf+en+Beach+Katwijk&hl=${lang === 'de' ? 'de' : lang === 'nl' ? 'nl' : 'uk'}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center justify-center gap-2 bg-white text-[#4A3E3D] border border-[#E6D5BC] px-5 py-3 rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#FAF7F2] transition shadow-sm"
@@ -337,7 +266,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                                 </a>
 
                                 <a
-                                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dennis+%26+Olena+Wedding&dates=20270612T133000Z/20270612T220000Z&details=Wedding+at+the+beach!&location=Surf+and+Beach,+Katwijk"
+                                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dennis+%26+Olena+Wedding&dates=20270612T133000Z/20270612T220000Z&details=Wedding+at+the+beach!&location=Strandpaviljoen+Surf+en+Beach,+Boulevard+Zeezijde+9,+2225+BB+Katwijk+aan+Zee"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center justify-center gap-2 bg-[#C17A63] text-white px-5 py-3 rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#A9644F] transition shadow-md"
@@ -349,19 +278,18 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                         </div>
 
                         <div className="w-full aspect-video md:aspect-square rounded-2xl overflow-hidden shadow-lg border border-[#E6D5BC]/50">
+                            {/* Динамічна карта з точними координатами Surf and Beach */}
                             <iframe
                                 title="Google Maps Venue"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2438.5637213459974!2d4.385412977051465!3d52.20588235889246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5c052e4a64097%3A0xa6182c6de3845b65!2sStrandpaviljoen%20Surf%20en%20Beach!5e0!3m2!1suk!2snl!4v1700000000000!5m2!1suk!2snl"
+                                src={`https://www.google.com/maps?q=Strandpaviljoen+Surf+en+Beach+Katwijk&output=embed&hl=${lang === 'de' ? 'de' : lang === 'nl' ? 'nl' : 'uk'}`}
                                 className="w-full h-full border-0 grayscale-[20%] contrast-[95%]"
                                 allowFullScreen=""
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
-                            ></iframe>
-                        </div>
+                            ></iframe>            </div>
                     </div>
                 </section>
             </ScrollReveal>
-
             {/* DRESS CODE */}
             <ScrollReveal>
                 <section className="max-w-2xl mx-auto px-6 py-20 text-center space-y-8">
@@ -388,140 +316,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
             {/* RSVP FORM */}
             <ScrollReveal>
-                <section className="max-w-xl mx-auto px-6 py-20 bg-white shadow-xl rounded-2xl mb-24 border border-[#E6D5BC]/30">
-                    <h2 className="text-3xl font-serif text-center text-[#3D3433] mb-3">
-                        {t.rsvpTitle}
-                    </h2>
-                    <p className="text-gray-500 text-sm font-light text-center mb-8">
-                        {t.rsvpText}
-                    </p>
-
-                    {submitted ? (
-                        <div className="text-center p-8 bg-[#9CAF88]/10 text-[#546246] rounded-xl flex flex-col items-center gap-3">
-                            <CheckCircle2 size={40} />
-                            <p className="font-medium">{t.successMsg}</p>
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-sm font-medium text-[#4A3E3D]">
-                                    {t.nameLabel}
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full bg-[#FAF7F2] border border-[#E6D5BC] rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
-                                    value={formData.name}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, name: e.target.value })
-                                    }
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-sm font-medium text-[#4A3E3D]">
-                                    {t.attendingLabel}
-                                </label>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <button
-                                        type="button"
-                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${formData.attending === "yes"
-                                                ? "bg-[#C17A63] text-white border-[#C17A63]"
-                                                : "bg-[#FAF7F2] border-[#E6D5BC] text-[#4A3E3D]"
-                                            }`}
-                                        onClick={() =>
-                                            setFormData({ ...formData, attending: "yes" })
-                                        }
-                                    >
-                                        {t.yes}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className={`py-2.5 px-4 rounded-lg border text-sm font-medium transition ${formData.attending === "no"
-                                                ? "bg-[#C17A63] text-white border-[#C17A63]"
-                                                : "bg-[#FAF7F2] border-[#E6D5BC] text-[#4A3E3D]"
-                                            }`}
-                                        onClick={() =>
-                                            setFormData({ ...formData, attending: "no" })
-                                        }
-                                    >
-                                        {t.no}
-                                    </button>
-                                </div>
-                            </div>
-
-                            {formData.attending === "yes" && (
-                                <div className="space-y-6 animate-[fadeInElegant_0.5s_ease-out]">
-                                    {/* Перекладений список кількості осіб */}
-                                    <div className="flex flex-col gap-1.5">
-                                        <label className="text-sm font-medium text-[#4A3E3D]">
-                                            {t.guestsCountLabel}
-                                        </label>
-                                        <select
-                                            className="w-full bg-[#FAF7F2] border border-[#E6D5BC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
-                                            value={formData.guestsCount}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...formData,
-                                                    guestsCount: Number(e.target.value),
-                                                })
-                                            }
-                                        >
-                                            <option value={1}>{t.guestOptions[0]}</option>
-                                            <option value={2}>{t.guestOptions[1]}</option>
-                                            <option value={3}>{t.guestOptions[2]}</option>
-                                            <option value={4}>{t.guestOptions[3]}</option>
-                                        </select>
-                                    </div>
-
-                                    {formData.guestsCount > 1 && (
-                                        <div className="flex flex-col gap-1.5 animate-[fadeInElegant_0.3s_ease-out]">
-                                            <label className="text-sm font-medium text-[#4A3E3D]">
-                                                {t.guestsNamesLabel}
-                                            </label>
-                                            <input
-                                                type="text"
-                                                required
-                                                placeholder={t.guestsNamesPlaceholder}
-                                                className="w-full bg-[#FAF7F2] border border-[#E6D5BC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
-                                                value={formData.guestNames}
-                                                onChange={(e) =>
-                                                    setFormData({
-                                                        ...formData,
-                                                        guestNames: e.target.value,
-                                                    })
-                                                }
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            <div className="flex flex-col gap-1.5">
-                                <label className="text-sm font-medium text-[#4A3E3D]">
-                                    {t.dietLabel}
-                                </label>
-                                <textarea
-                                    rows="2"
-                                    placeholder={t.dietPlaceholder}
-                                    className="w-full bg-[#FAF7F2] border border-[#E6D5BC] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
-                                    value={formData.diet}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, diet: e.target.value })
-                                    }
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-[#C17A63] text-white py-3 rounded-lg font-medium shadow-md hover:bg-[#A9644F] transition tracking-wider uppercase text-xs disabled:opacity-50"
-                            >
-                                {loading ? "Sending..." : t.submitBtn}
-                            </button>
-                        </form>
-                    )}
-                </section>
+                <Rsvp lang={lang} />
             </ScrollReveal>
 
             {/* FOOTER */}
