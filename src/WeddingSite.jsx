@@ -5,6 +5,12 @@ import {
     MapPin,
     Shirt,
     Clock,
+    GlassWater,
+    Camera,
+    Utensils,
+    Users,
+    Cake, 
+    Music
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
 import ScrollReveal from "./ScrollReveal";
@@ -182,52 +188,82 @@ export default function WeddingSite({ lang = "ua", setLang }) {
             </ScrollReveal>
 
             {/* PROGRAM (TIMELINE) */}
-            <ScrollReveal>
-                <section className="bg-white/50 backdrop-blur-sm py-20 border-y border-[#E6D5BC]/40">
-                    <div className="max-w-xl mx-auto px-6">
-                        <h2 className="text-3xl font-serif text-center text-[#3D3433] mb-12 flex justify-center items-center gap-3">
-                            <Clock size={24} className="text-[#C17A63]" /> {t.programTitle}
-                        </h2>
+{/* 
+  ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
+  14:00 - 14:30 | Збір гостей
+  14:30 - 15:15 | Церемонія
+  15:15 - 16:15 | Тост & Фото з гостями
+  16:15 - 17:15 | ПРИВАТНА ФОТОСЕСІЯ НА ПЛЯЖІ (Поки гості відпочивають)
+  17:30 - 19:30 | Вечеря
+  20:00 - ...   | Вечірка & Торт
+*/}
+<ScrollReveal>
+    <section className="bg-white/50 backdrop-blur-sm py-20 border-y border-[#E6D5BC]/40">
+        <div className="max-w-xl mx-auto px-6">
+            <h2 className="text-3xl font-serif text-center text-[#3D3433] mb-12 flex justify-center items-center gap-3">
+                <Clock size={24} className="text-[#C17A63]" /> {t.programTitle}
+            </h2>
 
-                        <div className="relative border-l-2 border-[#E6D5BC] ml-4 md:ml-32 space-y-10">
-                            {[
-                                {
-                                    time: "15:30",
-                                    title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі"
-                                },
-                                {
-                                    time: "16:00",
-                                    title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску"
-                                },
-                                {
-                                    time: "16:45",
-                                    title: lang === "de" ? "Glückwünsche, Torte & Borrel" : lang === "nl" ? "Felicitaties, taart & Borrel" : "Привітання, торт & Borrel"
-                                },
-                                {
-                                    time: "18:30",
-                                    title: lang === "de" ? "Strand-BBQ-Abendessen" : lang === "nl" ? "Beach BBQ Diner" : "Beach BBQ Вечеря"
-                                },
-                                {
-                                    time: "21:00",
-                                    title: lang === "de" ? "Lagerfeuer & Party" : lang === "nl" ? "Kampvuur & Feest" : "Багаття на піску & Танці"
-                                },
-                            ].map((item, index) => (
-                                <div key={index} className="relative pl-6 md:pl-8">
-                                    <div className="absolute -left-[9px] top-1 bg-[#FAF7F2] p-0.5 border-2 border-[#C17A63] rounded-full w-4 h-4 z-10"></div>
+            <div className="relative border-l-2 border-[#E6D5BC] ml-6 md:ml-32 space-y-10">
+                {[
+                    {
+                        time: "14:00",
+                        title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі",
+                        icon: GlassWater
+                    },
+                    {
+                        time: "14:30",
+                        title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску",
+                        icon: Heart
+                    },
+                    {
+                        time: "15:15",
+                        title: lang === "de" ? "Glückwünsche, Fotos & Borrel" : lang === "nl" ? "Felicitaties, foto's & Borrel" : "Привітання, спільні фото & Borrel",
+                        icon: Camera
+                    },
+                    {
+                        time: "17:30",
+                        title: lang === "de" ? "Festliches Strand-BBQ" : lang === "nl" ? "Feestelijk Beach BBQ" : "Святковий Beach BBQ",
+                        icon: Utensils
+                    },
+                    {
+                        time: "20:00",
+                        title: lang === "de" ? "Empfang der Abendgäste" : lang === "nl" ? "Ontvangst avondgasten" : "Збір вечірніх гостей",
+                        icon: Users
+                    },
+                    {
+                        time: "20:30",
+                        title: lang === "de" ? "Anschnitt der Hochzeitstorte" : lang === "nl" ? "Aansnijden van de bruidstaart" : "Урочистий торт",
+                        icon: Cake
+                    },
+                    {
+                        time: "20:45",
+                        title: lang === "de" ? "Eröffnungstanz & Party" : lang === "nl" ? "Openingsdans & Feest" : "Перший танець & Вечірка",
+                        icon: Music
+                    },
+                ].map((item, index) => {
+                    const IconComponent = item.icon;
+                    return (
+                        <div key={index} className="relative pl-8 md:pl-10 group">
+                            {/* Анімована іконка замість кружечка */}
+                            <div className="absolute -left-[17px] top-0.5 bg-[#FAF7F2] p-1.5 border border-[#C17A63] rounded-full text-[#C17A63] shadow-sm transition-transform duration-300 group-hover:scale-125">
+                                <IconComponent size={16} className="animate-pulse" />
+                            </div>
 
-                                    <time className="block md:absolute md:-left-28 md:top-0 text-sm font-mono tracking-wider font-semibold text-[#C17A63] mb-1 md:mb-0 md:text-right md:w-20">
-                                        {item.time}
-                                    </time>
+                            <time className="block md:absolute md:-left-28 md:top-1 text-sm font-mono tracking-wider font-semibold text-[#C17A63] mb-1 md:mb-0 md:text-right md:w-20">
+                                {item.time}
+                            </time>
 
-                                    <h3 className="text-lg font-medium font-serif text-[#3D3433]">
-                                        {item.title}
-                                    </h3>
-                                </div>
-                            ))}
+                            <h3 className="text-lg font-medium font-serif text-[#3D3433]">
+                                {item.title}
+                            </h3>
                         </div>
-                    </div>
-                </section>
-            </ScrollReveal>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
+</ScrollReveal>
             {/* VENUE & MAP SECTION */}
             <ScrollReveal>
                 <section className="max-w-5xl mx-auto px-6 py-20">
