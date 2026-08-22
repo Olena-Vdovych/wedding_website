@@ -17,14 +17,15 @@ import ScrollReveal from "./ScrollReveal";
 import Rsvp from "./Rsvp";
 
 // Переклади (Контент сайту)
+// Переклади (Контент сайту)
 const translations = {
     ua: {
         names: "Денніс & Олена",
         date: "10 Липня 2027",
         location: "Katwijk, Нідерланди",
-        storyTitle: "Наша Історія",
+        storyTitle: "Як усе починалося",
         storyText:
-            "Один випадок змінив усе. Українка та нідерландець знайшли один одного, і тепер ми неймовірно щасливі запросити вас розділити з нами початок нашої нової подорожі на березі Північного моря.",
+            "Часом доля обирає найнесподіваніші маршрути, щоб з'єднати серця українки та нідерландця. Ми знайшли один в одному свій дім. І для нас немає більшої радості, ніж зібрати найрідніших людей на солоному узбережжі Північного моря, щоб разом розпочати нову главу нашого життя.",
         programTitle: "Програма Дня",
         locationTitle: "Де все відбуватиметься",
         venueName: "Пляжний павільйон «Surf and Beach»",
@@ -40,11 +41,11 @@ const translations = {
     },
     nl: {
         names: "Dennis & Olena",
-        date: "10 July 2027",
+        date: "10 Juli 2027",
         location: "Katwijk aan Zee, Nederland",
-        storyTitle: "Ons Verhaal",
+        storyTitle: "Hoe het allemaal begon",
         storyText:
-            "Eén moment veranderde alles. Een Oekraïense en een Nederlander vonden elkaar, en we zijn ontzettend blij om jullie uit te nodigen om het begin van onze nieuwe reis te vieren aan de Noordzeekust.",
+            "Soms kiest het lot de meest onverwachte wegen om de harten van een Oekraïense en een Nederlander te verbinden. We hebben ons thuis in elkaar gevonden. Er is voor ons geen groter geluk dan onze dierbaarsten te verzamelen aan de kust van de Noordzee om samen aan dit nieuwe hoofdstuk van ons leven te beginnen.",
         programTitle: "Programma van de Dag",
         locationTitle: "Locatie & Parkeren",
         venueName: "Strandpaviljoen «Surf and Beach»",
@@ -60,20 +61,23 @@ const translations = {
     },
     de: {
         names: "Dennis & Olena",
-        date: "10 July 2027",
+        date: "10 Juli 2027",
         location: "Katwijk aan Zee, Niederlande",
-        storyTitle: "Unsere Geschichte",
-        storyText: "Ein Moment hat alles verändert. Eine Ukrainerin und ein Niederländer haben sich gefunden, und wir freuen uns riesig, Sie einzuladen, den Beginn unserer gemeinsamen Reise an der Nordseeküste zu feiern.",
+        storyTitle: "Wie alles begann",
+        storyText: 
+            "Manchmal wählt das Schicksal die unerwartetsten Wege, um die Herzen einer Ukrainerin und eines Niederländers zu verbinden. Wir haben ineinander unser Zuhause gefunden. Es gibt für uns kein größeres Glück, als unsere Liebsten an der Nordseeküste zu versammeln, um gemeinsam dieses neue Kapitel unseres Lebens zu beginnen.",
         programTitle: "Tagesprogramm",
         locationTitle: "Ort & Parken",
         venueName: "Strandpavillon «Surf and Beach»",
         venueAddress: "Katwijk aan Zee, Niederlande",
         parkingTitle: "Parkmöglichkeiten",
-        parkingText: "Wir empfehlen das Parken im Parkhaus 'Parkeergarage Boulevard Zeezijde' direkt am Strand. Von dort sind es nur wenige Gehminuten zum Pavillon.",
+        parkingText: 
+            "Wir empfehlen das Parken im Parkhaus 'Parkeergarage Boulevard Zeezijde' direkt am Strand. Von dort sind es nur wenige Gehminuten zum Pavillon.",
         googleMapsBtn: "In Google Maps öffnen",
         calendarBtn: "In Kalender eintragen",
         dressCodeTitle: "Dresscode & Palette",
-        dressCodeText: "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lassen Sie die Stöckelschuhe bitte zu Hause! Wählen Sie luftige Stoffe und bequeme Schuhe.",
+        dressCodeText: 
+            "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lassen Sie die Stöckelschuhe bitte zu Hause! Wählen Sie luftige Stoffe und bequeme Schuhe.",
     }
 };
 
