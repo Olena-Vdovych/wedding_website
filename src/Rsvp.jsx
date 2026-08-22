@@ -1,226 +1,275 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Users, CheckCircle2 } from 'lucide-react';
+import { Plus, Trash2, Send, Check } from 'lucide-react';
 
 const translations = {
     ua: {
-        title: "RSVP / Підтвердження",
-        nameLabel: "Ваше ім'я та прізвище *",
-        namePlaceholder: "напр. Олена Вдович",
-        attendanceLabel: "Чи будете ви на весіллі? *",
-        yes: "Так 🎉",
-        no: "Ні 😔",
-        addGuestsLabel: "Додати супроводжуючих (+1, сім'я):",
-        total: "Всього",
-        guestPlaceholder: "Ім'я та прізвище гостя №",
-        addGuestBtn: "+ Додати ще гостя (партнера / дитину)",
-        dietaryLabel: "Побажання щодо їжі чи алергії",
-        dietaryPlaceholder: "Алергії, вегетаріанство або коментарі...",
-        submitBtn: "Надіслати",
-        submittingBtn: "Надсилання...",
-        successTitle: "Дякуємо! Відповідь збережено 🎉",
-        successYes: "З нетерпінням чекаємо на вас",
-        successNo: "Дякуємо, що повідомили!"
+        title: "Підтвердження присутності",
+        subtitle: "Будь ласка, дайте відповідь до 1 травня 2027 року",
+        nameLabel: "Ваше ім'я та прізвище",
+        attendingLabel: "Чи зможете ви прийти?",
+        attendingYes: "Так, із задоволенням!",
+        attendingNo: "На жаль, не зможу",
+        hasChildrenLabel: "Чи будуть з вами діти?",
+        hasChildrenYes: "Так, будемо з дітьми",
+        hasChildrenNo: "Ні, без дітей",
+        childrenTitle: "Інформація про дітей (для ресторану)",
+        addChildBtn: "+ Додати дитину",
+        childName: "Ім'я дитини",
+        childAge: "Вік (років)",
+        dietLabel: "Харчові обмеження або алергії (необов'язково)",
+        submitBtn: "Надіслати відповідь",
+        successMsg: "Дякуємо! Вашу відповідь успішно надіслано ❤️"
     },
     nl: {
-        title: "RSVP / Bevestiging",
-        nameLabel: "Uw voor- en achternaam *",
-        namePlaceholder: "bijv. Olena Vdovych",
-        attendanceLabel: "Aanwezigheid op de bruiloft? *",
-        yes: "Ja 🎉",
-        no: "Nee 😔",
-        addGuestsLabel: "Extra gasten toevoegen (+1, familie):",
-        total: "Totaal",
-        guestPlaceholder: "Naam gast nr.",
-        addGuestBtn: "+ Extra gast toevoegen",
-        dietaryLabel: "Dieetwensen of allergieën",
-        dietaryPlaceholder: "Allergieën, vegetarisch of opmerkingen...",
-        submitBtn: "Versturen",
-        submittingBtn: "Versturen...",
-        successTitle: "Bedankt! Je reactie is opgeslagen 🎉",
-        successYes: "We kijken uit naar je komst",
-        successNo: "Bedankt voor het doorgeven!"
+        title: "Aanwezigheid bevestigen",
+        subtitle: "Gelieve te reageren vóór 1 mei 2027",
+        nameLabel: "Uw voor- en achternaam",
+        attendingLabel: "Kunt u aanwezig zijn?",
+        attendingYes: "Ja, heel graag!",
+        attendingNo: "Helaas kan ik niet",
+        hasChildrenLabel: "Komen er kinderen mee?",
+        hasChildrenYes: "Ja, we nemen kinderen mee",
+        hasChildrenNo: "Nee, zonder kinderen",
+        childrenTitle: "Informatie over kinderen (voor het restaurant)",
+        addChildBtn: "+ Kind toevoegen",
+        childName: "Naam van het kind",
+        childAge: "Leeftijd (jaar)",
+        dietLabel: "Dieetwensen of allergieën (optioneel)",
+        submitBtn: "Antwoord versturen",
+        successMsg: "Bedankt! Uw antwoord is succesvol verzonden ❤️"
     },
     de: {
-        title: "RSVP / Bestätigung",
-        nameLabel: "Ihr Vor- und Nachname *",
-        namePlaceholder: "z.B. Olena Vdovych",
-        attendanceLabel: "Teilnahme an der Hochzeit? *",
-        yes: "Ja 🎉",
-        no: "Nein 😔",
-        addGuestsLabel: "Weitere Gäste hinzufügen (+1, Familie):",
-        total: "Gesamt",
-        guestPlaceholder: "Name des Gastes Nr.",
-        addGuestBtn: "+ Weiteren Gast hinzufügen",
-        dietaryLabel: "Ernährungswünsche oder Allergien",
-        dietaryPlaceholder: "Allergien, Vegetarier oder Anmerkungen...",
-        submitBtn: "Absenden",
-        submittingBtn: "Wird gesendet...",
-        successTitle: "Vielen Dank! Ihre Antwort wurde gespeichert 🎉",
-        successYes: "Wir freuen uns auf Sie",
-        successNo: "Danke für die Rückmeldung!"
+        title: "Bestätigung der Teilnahme",
+        subtitle: "Bitte antworten Sie bis zum 1. Mai 2027",
+        nameLabel: "Ihr Vor- und Nachname",
+        attendingLabel: "Können Sie kommen?",
+        attendingYes: "Ja, sehr gerne!",
+        attendingNo: "Leider kann ich nicht",
+        hasChildrenLabel: "Kommen Kinder mit?",
+        hasChildrenYes: "Ja, mit Kindern",
+        hasChildrenNo: "Nein, ohne Kinder",
+        childrenTitle: "Informationen zu Kindern (für das Restaurant)",
+        addChildBtn: "+ Kind hinzufügen",
+        childName: "Name des Kindes",
+        childAge: "Alter (Jahre)",
+        dietLabel: "Diätetische Einschränkungen oder Allergien (optional)",
+        submitBtn: "Antwort senden",
+        successMsg: "Vielen Dank! Ihre Antwort wurde erfolgreich gesendet ❤️"
     }
 };
 
 export default function Rsvp({ lang = 'ua' }) {
-    // Приводимо lang до нижнього регістру (на випадок якщо передадуть 'UA' або 'ua')
-    const currentLang = lang.toLowerCase();
-    const t = translations[currentLang] || translations.ua;
+    const t = translations[lang] || translations.ua;
 
+    const [formData, setFormData] = useState({
+        name: '',
+        attending: 'yes',
+        hasChildren: 'no',
+        dietary: ''
+    });
+
+    const [children, setChildren] = useState([{ name: '', age: '' }]);
     const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [mainName, setMainName] = useState('');
-    const [attendance, setAttendance] = useState('Yes');
-    const [dietary, setDietary] = useState('');
-    const [plusOnes, setPlusOnes] = useState([]);
 
-    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScWInPJ5435Cg5H7uzOitjAsuyI5u5Mn_EbZ3GRUFqaAb-uag/formResponse";
-
-    const handleAddPlusOne = () => setPlusOnes([...plusOnes, '']);
-    const handleRemovePlusOne = (index) => setPlusOnes(plusOnes.filter((_, i) => i !== index));
-    const handlePlusOneChange = (index, value) => {
-        const updated = [...plusOnes];
-        updated[index] = value;
-        setPlusOnes(updated);
+    // Додати нове поле для дитини
+    const addChild = () => {
+        setChildren([...children, { name: '', age: '' }]);
     };
 
-    const totalGuests = attendance === 'Yes' ? 1 + plusOnes.filter(n => n.trim() !== '').length : 0;
+    // Видалити поле дитини
+    const removeChild = (index) => {
+        setChildren(children.filter((_, i) => i !== index));
+    };
 
-    const handleSubmit = async (e) => {
+    // Зміна даних дитини
+    const handleChildChange = (index, field, value) => {
+        const updated = [...children];
+        updated[index][field] = value;
+        setChildren(updated);
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true);
 
-        const allNamesList = attendance === 'Yes'
-            ? [mainName, ...plusOnes.filter(n => n.trim() !== '')].map((name, i) => `${i + 1}. ${name}`).join(' | ')
-            : mainName;
+        // Тут формуються підсумкові дані
+        const finalData = {
+            ...formData,
+            children: formData.hasChildren === 'yes' ? children : []
+        };
 
-        const formData = new URLSearchParams();
-        formData.append("entry.280550367", `${allNamesList} (Totaal: ${totalGuests})`);
-        formData.append("entry.1728895548", attendance);
-        formData.append("entry.15760116", dietary);
-
-        try {
-            await fetch(GOOGLE_FORM_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: formData.toString(),
-            });
-
-            setSubmitted(true);
-        } catch (error) {
-            console.error("Error submitting form:", error);
-        } finally {
-            setLoading(false);
-        }
+        console.log("Відправка RSVP:", finalData);
+        setSubmitted(true);
     };
+
+    if (submitted) {
+        return (
+            <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl border border-[#E6D5BC] shadow-md text-center space-y-4">
+                <div className="w-12 h-12 bg-[#C17A63]/10 text-[#C17A63] rounded-full flex items-center justify-center mx-auto">
+                    <Check size={24} />
+                </div>
+                <h3 className="text-xl font-serif text-[#3D3433]">{t.successMsg}</h3>
+            </div>
+        );
+    }
 
     return (
-        <section className="max-w-lg mx-auto p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-[#E6D5BC]/50 my-8">
-            <h2 className="text-2xl font-serif text-center text-[#3D3433] mb-6 flex justify-center items-center gap-2">
-                <Users className="text-[#C17A63]" /> {t.title}
-            </h2>
-
-            {submitted ? (
-                <div className="text-center p-6 bg-green-50 text-green-800 rounded-xl border border-green-200 space-y-2">
-                    <CheckCircle2 size={40} className="mx-auto text-green-600 mb-2" />
-                    <p className="font-serif text-xl font-semibold">{t.successTitle}</p>
-                    <p className="text-sm">
-                        {attendance === 'Yes'
-                            ? `${t.successYes} (${totalGuests})!`
-                            : t.successNo}
-                    </p>
+        <section className="max-w-2xl mx-auto px-6 py-12">
+            <div className="bg-white rounded-2xl border border-[#E6D5BC]/60 p-6 md:p-10 shadow-sm space-y-6">
+                <div className="text-center space-y-2">
+                    <h2 className="text-2xl md:text-3xl font-serif text-[#3D3433]">
+                        {t.title}
+                    </h2>
+                    <p className="text-xs text-gray-500">{t.subtitle}</p>
                 </div>
-            ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Ім'я гостя */}
                     <div>
-                        <label className="block text-sm font-medium text-[#3D3433] mb-1">
-                            {t.nameLabel}
+                        <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                            {t.nameLabel} *
                         </label>
                         <input
                             type="text"
                             required
-                            value={mainName}
-                            onChange={(e) => setMainName(e.target.value)}
-                            placeholder={t.namePlaceholder}
-                            className="w-full px-4 py-2 border border-[#E6D5BC] rounded-lg focus:ring-2 focus:ring-[#C17A63] outline-none"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
                         />
                     </div>
 
+                    {/* Чи прийде */}
                     <div>
-                        <label className="block text-sm font-medium text-[#3D3433] mb-1">
-                            {t.attendanceLabel}
+                        <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                            {t.attendingLabel}
                         </label>
-                        <select
-                            value={attendance}
-                            onChange={(e) => setAttendance(e.target.value)}
-                            className="w-full px-4 py-2 border border-[#E6D5BC] rounded-lg focus:ring-2 focus:ring-[#C17A63] outline-none bg-white"
-                        >
-                            <option value="Yes">{t.yes}</option>
-                            <option value="No">{t.no}</option>
-                        </select>
-                    </div>
-
-                    {attendance === 'Yes' && (
-                        <div className="p-4 bg-[#FAF7F2] rounded-xl border border-[#E6D5BC]/60 space-y-3">
-                            <div className="flex justify-between items-center">
-                                <span className="text-sm font-medium text-[#3D3433]">{t.addGuestsLabel}</span>
-                                <span className="text-xs bg-[#C17A63]/10 text-[#C17A63] px-2.5 py-1 rounded-full font-semibold">
-                                    {t.total}: {totalGuests}
-                                </span>
-                            </div>
-
-                            {plusOnes.map((guest, index) => (
-                                <div key={index} className="flex gap-2 items-center">
-                                    <input
-                                        type="text"
-                                        required
-                                        value={guest}
-                                        onChange={(e) => handlePlusOneChange(index, e.target.value)}
-                                        placeholder={`${t.guestPlaceholder} ${index + 1}`}
-                                        className="flex-1 px-3 py-1.5 text-sm border border-[#E6D5BC] rounded-lg focus:ring-2 focus:ring-[#C17A63] outline-none bg-white"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemovePlusOne(index)}
-                                        className="p-1.5 text-red-500 hover:text-red-700 rounded-lg"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
-                                </div>
-                            ))}
-
+                        <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
-                                onClick={handleAddPlusOne}
-                                className="w-full py-2 px-3 border border-dashed border-[#C17A63] text-[#C17A63] hover:bg-[#C17A63]/5 rounded-lg text-sm font-medium flex justify-center items-center gap-1.5"
+                                onClick={() => setFormData({ ...formData, attending: 'yes' })}
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'yes'
+                                        ? 'bg-[#C17A63] text-white border-[#C17A63]'
+                                        : 'bg-white text-gray-600 border-[#E6D5BC] hover:bg-gray-50'
+                                    }`}
                             >
-                                <Plus size={16} /> {t.addGuestBtn}
+                                {t.attendingYes}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setFormData({ ...formData, attending: 'no' })}
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'no'
+                                        ? 'bg-[#3D3433] text-white border-[#3D3433]'
+                                        : 'bg-white text-gray-600 border-[#E6D5BC] hover:bg-gray-50'
+                                    }`}
+                            >
+                                {t.attendingNo}
                             </button>
                         </div>
-                    )}
-
-                    <div>
-                        <label className="block text-sm font-medium text-[#3D3433] mb-1">
-                            {t.dietaryLabel}
-                        </label>
-                        <textarea
-                            rows="2"
-                            value={dietary}
-                            onChange={(e) => setDietary(e.target.value)}
-                            placeholder={t.dietaryPlaceholder}
-                            className="w-full px-4 py-2 border border-[#E6D5BC] rounded-lg focus:ring-2 focus:ring-[#C17A63] outline-none"
-                        ></textarea>
                     </div>
+
+                    {/* Якщо прийде — запитуємо про дітей */}
+                    {formData.attending === 'yes' && (
+                        <>
+                            <div>
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                    {t.hasChildrenLabel}
+                                </label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormData({ ...formData, hasChildren: 'yes' })}
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'yes'
+                                                ? 'bg-[#C17A63] text-white border-[#C17A63]'
+                                                : 'bg-white text-gray-600 border-[#E6D5BC]'
+                                            }`}
+                                    >
+                                        {t.hasChildrenYes}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormData({ ...formData, hasChildren: 'no' })}
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'no'
+                                                ? 'bg-[#C17A63] text-white border-[#C17A63]'
+                                                : 'bg-white text-gray-600 border-[#E6D5BC]'
+                                            }`}
+                                    >
+                                        {t.hasChildrenNo}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Секція додавання дітей */}
+                            {formData.hasChildren === 'yes' && (
+                                <div className="p-4 bg-[#FAF7F2] rounded-xl border border-[#E6D5BC]/60 space-y-4">
+                                    <h4 className="text-xs font-medium uppercase tracking-wider text-[#3D3433]">
+                                        👶 {t.childrenTitle}
+                                    </h4>
+
+                                    {children.map((child, index) => (
+                                        <div key={index} className="flex gap-2 items-center">
+                                            <input
+                                                type="text"
+                                                placeholder={t.childName}
+                                                required
+                                                value={child.name}
+                                                onChange={(e) => handleChildChange(index, 'name', e.target.value)}
+                                                className="flex-1 px-3 py-2 text-xs rounded-lg border border-[#E6D5BC] bg-white focus:outline-none"
+                                            />
+                                            <input
+                                                type="number"
+                                                placeholder={t.childAge}
+                                                required
+                                                min="0"
+                                                max="17"
+                                                value={child.age}
+                                                onChange={(e) => handleChildChange(index, 'age', e.target.value)}
+                                                className="w-24 px-3 py-2 text-xs rounded-lg border border-[#E6D5BC] bg-white focus:outline-none"
+                                            />
+                                            {children.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeChild(index)}
+                                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        type="button"
+                                        onClick={addChild}
+                                        className="inline-flex items-center gap-1 text-xs text-[#C17A63] font-medium hover:underline pt-1"
+                                    >
+                                        <Plus size={14} /> {t.addChildBtn}
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Особливі дієтичні побажання */}
+                            <div>
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                    {t.dietLabel}
+                                </label>
+                                <textarea
+                                    rows={2}
+                                    value={formData.dietary}
+                                    onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
+                                    className="w-full px-4 py-2 text-xs rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                ></textarea>
+                            </div>
+                        </>
+                    )}
 
                     <button
                         type="submit"
-                        disabled={loading}
-                        className="w-full bg-[#C17A63] hover:bg-[#a86450] text-white font-medium py-3 rounded-xl transition duration-200 shadow-md disabled:opacity-50"
+                        className="w-full py-3 bg-[#C17A63] text-white rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#A9644F] transition shadow-md flex items-center justify-center gap-2"
                     >
-                        {loading ? t.submittingBtn : t.submitBtn}
+                        <Send size={14} />
+                        {t.submitBtn}
                     </button>
                 </form>
-            )}
+            </div>
         </section>
     );
 }
