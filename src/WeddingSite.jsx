@@ -15,6 +15,7 @@ import {
 import couplePhoto from "./assets/couple.webp";
 import ScrollReveal from "./ScrollReveal";
 import Rsvp from "./Rsvp";
+import CountdownTimer from "./CountdownTimer";
 
 // Переклади (Контент сайту)
 // Переклади (Контент сайту)
@@ -64,19 +65,19 @@ const translations = {
         date: "10 Juli 2027",
         location: "Katwijk aan Zee, Niederlande",
         storyTitle: "Wie alles begann",
-        storyText: 
+        storyText:
             "Manchmal wählt das Schicksal die unerwartetsten Wege, um die Herzen einer Ukrainerin und eines Niederländers zu verbinden. Wir haben ineinander unser Zuhause gefunden. Es gibt für uns kein größeres Glück, als unsere Liebsten an der Nordseeküste zu versammeln, um gemeinsam dieses neue Kapitel unseres Lebens zu beginnen.",
         programTitle: "Tagesprogramm",
         locationTitle: "Ort & Parken",
         venueName: "Strandpavillon «Surf and Beach»",
         venueAddress: "Katwijk aan Zee, Niederlande",
         parkingTitle: "Parkmöglichkeiten",
-        parkingText: 
+        parkingText:
             "Wir empfehlen das Parken im Parkhaus 'Parkeergarage Boulevard Zeezijde' direkt am Strand. Von dort sind es nur wenige Gehminuten zum Pavillon.",
         googleMapsBtn: "In Google Maps öffnen",
         calendarBtn: "In Kalender eintragen",
         dressCodeTitle: "Dresscode & Palette",
-        dressCodeText: 
+        dressCodeText:
             "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lassen Sie die Stöckelschuhe bitte zu Hause! Wählen Sie luftige Stoffe und bequeme Schuhe.",
     }
 };
@@ -194,7 +195,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     </p>
                 </section>
             </ScrollReveal>
-
+            
             {/* PROGRAM (TIMELINE) */}
             {/* 
   ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
@@ -205,88 +206,88 @@ export default function WeddingSite({ lang = "ua", setLang }) {
   17:30 - 19:30 | Вечеря
   20:00 - ...   | Вечірка & Торт
 */}
-<ScrollReveal>
-    <section className="bg-white/50 backdrop-blur-sm py-20 border-y border-[#E6D5BC]/40">
-        <div className="max-w-xl mx-auto px-6">
-            <h2 className="text-3xl font-serif text-center text-[#3D3433] mb-12 flex justify-center items-center gap-3">
-                <Clock size={24} className="text-[#C17A63]" /> {t.programTitle}
-            </h2>
+            <ScrollReveal>
+                <section className="bg-white/50 backdrop-blur-sm py-20 border-y border-[#E6D5BC]/40">
+                    <div className="max-w-xl mx-auto px-6">
+                        <h2 className="text-3xl font-serif text-center text-[#3D3433] mb-12 flex justify-center items-center gap-3">
+                            <Clock size={24} className="text-[#C17A63]" /> {t.programTitle}
+                        </h2>
 
-            <div className="relative border-l-2 border-[#E6D5BC] ml-6 md:ml-32 space-y-10">
-                {[
-                    {
-                        time: "14:00",
-                        title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі",
-                        icon: GlassWater,
-                        forPartyOnly: false
-                    },
-                    {
-                        time: "14:30",
-                        title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску",
-                        icon: Heart,
-                        forPartyOnly: false
-                    },
-                    {
-                        time: "15:15",
-                        title: lang === "de" ? "Glückwünsche, Fotos & Borrel" : lang === "nl" ? "Felicitaties, foto's & Borrel" : "Привітання, спільні фото & Borrel",
-                        icon: Camera,
-                        forPartyOnly: false
-                    },
-                    {
-                        time: "17:30",
-                        title: lang === "de" ? "Festliches Strand-BBQ" : lang === "nl" ? "Feestelijk Beach BBQ" : "Святковий Beach BBQ",
-                        icon: Utensils,
-                        forPartyOnly: false
-                    },
-                    {
-                        time: "20:00",
-                        title: lang === "de" ? "Empfang der Abendgäste" : lang === "nl" ? "Ontvangst avondgasten" : "Збір вечірніх гостей",
-                        icon: Users,
-                        forPartyOnly: true
-                    },
-                    {
-                        time: "20:30",
-                        title: lang === "de" ? "Anschnitt der Hochzeitstorte" : lang === "nl" ? "Aansnijden van de bruidstaart" : "Урочистий торт",
-                        icon: Cake,
-                        forPartyOnly: true
-                    },
-                    {
-                        time: "20:45",
-                        title: lang === "de" ? "Eröffnungstanz & Party" : lang === "nl" ? "Openingsdans & Feest" : "Перший танець & Вечірка",
-                        icon: Music,
-                        forPartyOnly: true
-                    },
-                    {
-                        time: "00:00",
-                        title: lang === "de" ? "Abschluss der Feier" : lang === "nl" ? "Afsluiting van de feest" : "Завершення святкування",
-                        icon: Clock,
-                        forPartyOnly: true
-                    }
-                ]
-                // Фільтруємо: якщо це вечірній гість, залишаємо лише вечірні події
-                .filter(item => isPartyOnly ? item.forPartyOnly : true)
-                .map((item, index) => {
-                    const IconComponent = item.icon;
-                    return (
-                        <div key={index} className="relative pl-8 md:pl-10 group">
-                            <div className="absolute -left-[17px] top-0.5 bg-[#FAF7F2] p-1.5 border border-[#C17A63] rounded-full text-[#C17A63] shadow-sm transition-transform duration-300 group-hover:scale-125">
-                                <IconComponent size={16} className="animate-pulse" />
-                            </div>
+                        <div className="relative border-l-2 border-[#E6D5BC] ml-6 md:ml-32 space-y-10">
+                            {[
+                                {
+                                    time: "14:00",
+                                    title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі",
+                                    icon: GlassWater,
+                                    forPartyOnly: false
+                                },
+                                {
+                                    time: "14:30",
+                                    title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску",
+                                    icon: Heart,
+                                    forPartyOnly: false
+                                },
+                                {
+                                    time: "15:15",
+                                    title: lang === "de" ? "Glückwünsche, Fotos & Borrel" : lang === "nl" ? "Felicitaties, foto's & Borrel" : "Привітання, спільні фото & Borrel",
+                                    icon: Camera,
+                                    forPartyOnly: false
+                                },
+                                {
+                                    time: "17:30",
+                                    title: lang === "de" ? "Festliches Strand-BBQ" : lang === "nl" ? "Feestelijk Beach BBQ" : "Святковий Beach BBQ",
+                                    icon: Utensils,
+                                    forPartyOnly: false
+                                },
+                                {
+                                    time: "20:00",
+                                    title: lang === "de" ? "Empfang der Abendgäste" : lang === "nl" ? "Ontvangst avondgasten" : "Збір вечірніх гостей",
+                                    icon: Users,
+                                    forPartyOnly: true
+                                },
+                                {
+                                    time: "20:30",
+                                    title: lang === "de" ? "Anschnitt der Hochzeitstorte" : lang === "nl" ? "Aansnijden van de bruidstaart" : "Урочистий торт",
+                                    icon: Cake,
+                                    forPartyOnly: true
+                                },
+                                {
+                                    time: "20:45",
+                                    title: lang === "de" ? "Eröffnungstanz & Party" : lang === "nl" ? "Openingsdans & Feest" : "Перший танець & Вечірка",
+                                    icon: Music,
+                                    forPartyOnly: true
+                                },
+                                {
+                                    time: "00:00",
+                                    title: lang === "de" ? "Abschluss der Feier" : lang === "nl" ? "Afsluiting van de feest" : "Завершення святкування",
+                                    icon: Clock,
+                                    forPartyOnly: true
+                                }
+                            ]
+                                // Фільтруємо: якщо це вечірній гість, залишаємо лише вечірні події
+                                .filter(item => isPartyOnly ? item.forPartyOnly : true)
+                                .map((item, index) => {
+                                    const IconComponent = item.icon;
+                                    return (
+                                        <div key={index} className="relative pl-8 md:pl-10 group">
+                                            <div className="absolute -left-[17px] top-0.5 bg-[#FAF7F2] p-1.5 border border-[#C17A63] rounded-full text-[#C17A63] shadow-sm transition-transform duration-300 group-hover:scale-125">
+                                                <IconComponent size={16} className="animate-pulse" />
+                                            </div>
 
-                            <time className="block md:absolute md:-left-28 md:top-1 text-sm font-mono tracking-wider font-semibold text-[#C17A63] mb-1 md:mb-0 md:text-right md:w-20">
-                                {item.time}
-                            </time>
+                                            <time className="block md:absolute md:-left-28 md:top-1 text-sm font-mono tracking-wider font-semibold text-[#C17A63] mb-1 md:mb-0 md:text-right md:w-20">
+                                                {item.time}
+                                            </time>
 
-                            <h3 className="text-lg font-medium font-serif text-[#3D3433]">
-                                {item.title}
-                            </h3>
+                                            <h3 className="text-lg font-medium font-serif text-[#3D3433]">
+                                                {item.title}
+                                            </h3>
+                                        </div>
+                                    );
+                                })}
                         </div>
-                    );
-                })}
-            </div>
-        </div>
-    </section>
-</ScrollReveal>
+                    </div>
+                </section>
+            </ScrollReveal>
             {/* VENUE & MAP SECTION */}
             <ScrollReveal>
                 <section className="max-w-5xl mx-auto px-6 py-20">
@@ -372,6 +373,17 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     </div>
                 </section>
             </ScrollReveal>
+
+          {/* COUNTDOWN TIMER */}
+<ScrollReveal>
+    <section className="text-center py-8">
+        <h1 className="font-serif text-4xl text-[#3D3433]">Olena & Dennis</h1>
+        <p className="text-sm text-gray-500 mt-2">10.07.2027 • Beach Wedding</p>
+
+        {/* Додаємо lang={lang} */}
+        <CountdownTimer lang={lang} targetDate="2027-07-10T14:00:00" />
+    </section>
+</ScrollReveal>
 
             {/* RSVP FORM */}
             <ScrollReveal>
