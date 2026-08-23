@@ -10,6 +10,7 @@ import {
     Utensils,
     Users,
     Cake,
+    Gift,
     Music
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
@@ -198,14 +199,14 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
             {/* PROGRAM (TIMELINE) */}
             {/* 
-  ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
-  14:00 - 14:30 | Збір гостей
-  14:30 - 15:15 | Церемонія
-  15:15 - 16:15 | Тост & Фото з гостями
-  16:15 - 17:15 | ПРИВАТНА ФОТОСЕСІЯ НА ПЛЯЖІ (Поки гості відпочивають)
-  17:30 - 19:30 | Вечеря
-  20:00 - ...   | Вечірка & Торт
-*/}
+            ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
+            14:00 - 14:30 | Збір гостей
+            14:30 - 15:15 | Церемонія
+            15:15 - 16:15 | Тост & Фото з гостями
+            16:15 - 17:15 | ПРИВАТНА ФОТОСЕСІЯ НА ПЛЯЖІ (Поки гості відпочивають)
+            17:30 - 19:30 | Вечеря
+            20:00 - ...   | Вечірка & Торт
+            */}
             <ScrollReveal>
                 <section className="bg-white/50 backdrop-blur-sm py-20 border-y border-[#E6D5BC]/40">
                     <div className="max-w-xl mx-auto px-6">
@@ -406,6 +407,27 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                 </section>
             </ScrollReveal>
 
+            {/* GIFTS SECTION */}
+            <ScrollReveal>
+                <section className="max-w-xl mx-auto px-6 py-12 text-center space-y-4">
+                    <div className="w-12 h-12 bg-[#FAF7F2] border border-[#E6D5BC] rounded-full flex items-center justify-center mx-auto text-[#C17A63]">
+                        <Gift size={20} />
+                    </div>
+
+                    <h3 className="text-2xl font-serif text-[#3D3433]">
+                        {lang === 'nl' ? 'Cadeautip' : lang === 'de' ? 'Geschenkwunsch' : 'Побажання щодо подарунків'}
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-gray-600 font-light leading-relaxed max-w-lg mx-auto">
+                        {lang === 'nl'
+                            ? 'Jullie aanwezigheid op onze bruiloft is voor ons het mooiste cadeau! Mocht je ons toch een cadeau willen geven, dan stellen wij een bijdrage in een enveloppe voor onze toekomst erg op prijs 💌'
+                            : lang === 'de'
+                                ? 'Eure Anwesenheit ist für uns das größte Geschenk! Wenn ihr uns dennoch eine Freude machen möchtet, freuen wir uns über einen Beitrag in einem Umschlag für unsere gemeinsame Zukunft 💌'
+                                : 'Ваша присутність — це найбільший подарунок для нас! Якщо ви бажаєте привітати нас подарунком, ми будемо щиро вдячні за внесок у конверті в наш сімейний бюджет та майбутні подорожі 💌'
+                        }
+                    </p>
+                </section>
+            </ScrollReveal>
             {/* RSVP FORM */}
             <ScrollReveal>
                 <Rsvp lang={lang} />
