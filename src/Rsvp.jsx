@@ -5,58 +5,76 @@ const translations = {
     ua: {
         title: "Підтвердження присутності",
         subtitle: "Будь ласка, дайте відповідь до 1 травня 2027 року",
-        nameLabel: "Ваше ім'я та прізвище",
-        attendingLabel: "Чи зможете ви прийти?",
+        nameLabel: "Ваше ім'я та прізвище (Головний гість)",
+        namePlaceholder: "напр. Тарас Шевченко",
+        attendingLabel: "Чи зможете ви бути з нами?",
         attendingYes: "Так, із задоволенням!",
-        attendingNo: "На жаль, не зможу",
-        hasChildrenLabel: "Чи будуть з вами діти?",
-        hasChildrenYes: "Так, будемо з дітьми",
+        attendingNo: "Ні, на жаль, не можу",
+        adultsLabel: "Загальна кількість дорослих",
+        guestNameLabel: "Ім'я та прізвище супроводжуючого гостя",
+        guestNamePlaceholder: "напр. Олена Шевченко",
+        hasChildrenLabel: "Чи буде з вами дитина?",
+        hasChildrenYes: "Так, будемо з дитиною",
         hasChildrenNo: "Ні, без дітей",
-        childrenTitle: "Інформація про дітей (для ресторану)",
+        childrenTitle: "Відомості про дітей (для ресторану)",
         addChildBtn: "+ Додати дитину",
         childName: "Ім'я дитини",
-        childAge: "Вік (років)",
-        dietLabelFull: "Харчові обмеження або алергії (необов'язково)",
+        childAge: "Вік",
+        dietLabelFull: "Обмеження в харчуванні, алергії або особливі побажання (необов'язково)",
         dietLabelParty: "Особливі побажання щодо напоїв або алергії (необов'язково)",
-        submitBtn: "Надіслати відповідь",
-        successMsg: "Дякуємо! Вашу відповідь успішно надіслано ❤️"
+        dietPlaceholder: "напр. Вегетаріанство, алергія на горіхи, веган...",
+        submitBtn: "Надіслати",
+        sendingBtn: "Надсилання...",
+        successMsg: "Дякуємо! Вашу відповідь успішно збережено ❤️"
     },
     nl: {
         title: "Aanwezigheid bevestigen",
-        subtitle: "Gelieve te reageren vóór 1 mei 2027",
-        nameLabel: "Uw voor- en achternaam",
-        attendingLabel: "Kunt u aanwezig zijn?",
-        attendingYes: "Ja, heel graag!",
-        attendingNo: "Helaas kan ik niet",
+        subtitle: "Laat het ons weten voor 1 mei 2027",
+        nameLabel: "Volledige naam (Hoofdgast)",
+        namePlaceholder: "bijv. Jan de Vries",
+        attendingLabel: "Ben je erbij?",
+        attendingYes: "Ja, ik ben erbij!",
+        attendingNo: "Nee, ik kan helaas niet",
+        adultsLabel: "Totaal aantal volwassenen",
+        guestNameLabel: "Naam extra volwassene",
+        guestNamePlaceholder: "bijv. Anna de Vries",
         hasChildrenLabel: "Komen er kinderen mee?",
-        hasChildrenYes: "Ja, we nemen kinderen mee",
-        hasChildrenNo: "Nee, zonder kinderen",
-        childrenTitle: "Informatie over kinderen (voor het restaurant)",
+        hasChildrenYes: "Ja, er komen kinderen mee",
+        hasChildrenNo: "Nee, geen kinderen",
+        childrenTitle: "Gegevens van de kinderen (voor de locatie)",
         addChildBtn: "+ Kind toevoegen",
-        childName: "Naam van het kind",
-        childAge: "Leeftijd (jaar)",
-        dietLabelFull: "Dieetwensen of allergieën (optioneel)",
+        childName: "Naam kind",
+        childAge: "Leeftijd",
+        dietLabelFull: "Dieetwensen, allergieën of speciale verzoeken (optioneel)",
         dietLabelParty: "Speciale drankwensen of allergieën (optioneel)",
-        submitBtn: "Antwoord versturen",
-        successMsg: "Bedankt! Uw antwoord is succesvol verzonden ❤️"
+        dietPlaceholder: "bijv. Vegetarisch, glutenvrij, nootallergie...",
+        submitBtn: "Versturen",
+        sendingBtn: "Versturen...",
+        successMsg: "Bedankt! Je reactie is succesvol verzonden ❤️"
     },
     de: {
-        title: "Bestätigung der Teilnahme",
+        title: "Anwesenheit bestätigen",
         subtitle: "Bitte antworten Sie bis zum 1. Mai 2027",
-        nameLabel: "Ihr Vor- und Nachname",
-        attendingLabel: "Können Sie kommen?",
-        attendingYes: "Ja, sehr gerne!",
-        attendingNo: "Leider kann ich nicht",
-        hasChildrenLabel: "Kommen Kinder mit?",
+        nameLabel: "Vollständiger Name (Hauptgast)",
+        namePlaceholder: "z.B. Max Mustermann",
+        attendingLabel: "Wirst du dabei sein?",
+        attendingYes: "Ja, ich bin dabei!",
+        attendingNo: "Nein, ich kann leider nicht",
+        adultsLabel: "Gesamtzahl der Erwachsenen",
+        guestNameLabel: "Name des begleitenden Gastes",
+        guestNamePlaceholder: "z.B. Erika Mustermann",
+        hasChildrenLabel: "Bringen Sie Kinder mit?",
         hasChildrenYes: "Ja, mit Kindern",
         hasChildrenNo: "Nein, ohne Kinder",
-        childrenTitle: "Informationen zu Kindern (für das Restaurant)",
+        childrenTitle: "Angaben zu den Kindern (für das Restaurant)",
         addChildBtn: "+ Kind hinzufügen",
         childName: "Name des Kindes",
-        childAge: "Alter (Jahre)",
-        dietLabelFull: "Diätetische Einschränkungen oder Allergien (optional)",
+        childAge: "Alter",
+        dietLabelFull: "Diätetische Einschränkungen, Allergien oder besondere Wünsche (optional)",
         dietLabelParty: "Besondere Getränkewünsche oder Allergien (optional)",
-        submitBtn: "Antwort senden",
+        dietPlaceholder: "z.B. Vegetarisch, Glutenfrei, Nussallergie...",
+        submitBtn: "Absenden",
+        sendingBtn: "Wird gesendet...",
         successMsg: "Vielen Dank! Ihre Antwort wurde erfolgreich gesendet ❤️"
     }
 };
@@ -64,19 +82,49 @@ const translations = {
 export default function Rsvp({ lang = 'ua' }) {
     const t = translations[lang] || translations.ua;
 
-    // Зчитуємо параметр вечірнього гостя
     const searchParams = new URLSearchParams(window.location.search);
     const isPartyOnly = searchParams.get('type') === 'party';
 
     const [formData, setFormData] = useState({
-        name: '',
+        mainName: '',
         attending: 'yes',
+        adultsCount: 1,
+        additionalAdults: [], // Масив для імен додаткових дорослих
         hasChildren: 'no',
         dietary: ''
     });
 
     const [children, setChildren] = useState([{ name: '', age: '' }]);
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    // Зміна кількості дорослих
+    const handleAdultsCountChange = (count) => {
+        const newCount = Math.max(1, count);
+        const currentAdditional = [...formData.additionalAdults];
+        
+        if (newCount - 1 > currentAdditional.length) {
+            // Додаємо порожні поля для нових дорослих
+            while (currentAdditional.length < newCount - 1) {
+                currentAdditional.push('');
+            }
+        } else {
+            // Обрізаємо масив якщо кількість зменшилась
+            currentAdditional.length = newCount - 1;
+        }
+
+        setFormData({
+            ...formData,
+            adultsCount: newCount,
+            additionalAdults: currentAdditional
+        });
+    };
+
+    const handleAdditionalAdultChange = (index, value) => {
+        const updated = [...formData.additionalAdults];
+        updated[index] = value;
+        setFormData({ ...formData, additionalAdults: updated });
+    };
 
     const addChild = () => {
         setChildren([...children, { name: '', age: '' }]);
@@ -92,17 +140,49 @@ export default function Rsvp({ lang = 'ua' }) {
         setChildren(updated);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        const finalData = {
-            guestType: isPartyOnly ? 'Party Guest (Evening)' : 'Full Day Guest',
-            ...formData,
-            children: formData.hasChildren === 'yes' ? children : []
-        };
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfF9Sz60X-aQG1LEvRfnbxuXXDfkjiiWDUDQ0X2U/formResponse";
 
-        console.log("Відправка RSVP:", finalData);
-        setSubmitted(true);
+        // Формуємо повний список імен дорослих
+        const allAdultsNames = [
+            formData.mainName,
+            ...formData.additionalAdults.filter(name => name.trim() !== '')
+        ].join(', ');
+
+        // Інформація про дітей
+        const childrenCount = formData.hasChildren === 'yes' ? children.length : 0;
+        const childrenDetails = formData.hasChildren === 'yes'
+            ? children.map(c => `${c.name} (${c.age} y.o.)`).join(', ')
+            : '0';
+
+        const childrenString = childrenCount > 0 ? `${childrenCount} (${childrenDetails})` : '0';
+
+        const formPayload = new URLSearchParams();
+        formPayload.append("entry.280550367", allAdultsNames);                                            // Full name (Усі дорослі)
+        formPayload.append("entry.1728895548", formData.attending === 'yes' ? 'Yes' : 'No');             // Will you join us?
+        formPayload.append("entry.655186030", formData.attending === 'yes' ? formData.adultsCount : 0); // Number of Adults
+        formPayload.append("entry.1289813742", formData.attending === 'yes' ? childrenString : '0');      // Number of Children
+        formPayload.append("entry.15760116", formData.dietary || 'None');                                // Alergie / Proposal
+
+        try {
+            await fetch(GOOGLE_FORM_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: formPayload
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error("Error submitting RSVP:", error);
+            alert("Connection error. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (submitted) {
@@ -127,7 +207,7 @@ export default function Rsvp({ lang = 'ua' }) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Ім'я гостя */}
+                    {/* Main Guest Name */}
                     <div>
                         <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
                             {t.nameLabel} *
@@ -135,16 +215,17 @@ export default function Rsvp({ lang = 'ua' }) {
                         <input
                             type="text"
                             required
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            placeholder={t.namePlaceholder}
+                            value={formData.mainName}
+                            onChange={(e) => setFormData({ ...formData, mainName: e.target.value })}
                             className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
                         />
                     </div>
 
-                    {/* Чи прийде */}
+                    {/* Attendance */}
                     <div>
                         <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
-                            {t.attendingLabel}
+                            {t.attendingLabel} *
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                             <button
@@ -170,10 +251,43 @@ export default function Rsvp({ lang = 'ua' }) {
                         </div>
                     </div>
 
-                    {/* Додаткові поля, якщо гість прийде */}
+                    {/* Additional fields if attending */}
                     {formData.attending === 'yes' && (
                         <>
-                            {/* Діти */}
+                            {/* Number of Adults */}
+                            <div>
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                    {t.adultsLabel} *
+                                </label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="10"
+                                    required
+                                    value={formData.adultsCount}
+                                    onChange={(e) => handleAdultsCountChange(parseInt(e.target.value) || 1)}
+                                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                />
+                            </div>
+
+                            {/* Additional Adults Names */}
+                            {formData.additionalAdults.map((guestName, index) => (
+                                <div key={index} className="pl-4 border-l-2 border-[#C17A63]/40 space-y-2">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D]">
+                                        {t.guestNameLabel} #{index + 2} *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder={t.guestNamePlaceholder}
+                                        value={guestName}
+                                        onChange={(e) => handleAdditionalAdultChange(index, e.target.value)}
+                                        className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                    />
+                                </div>
+                            ))}
+
+                            {/* Has Children */}
                             <div>
                                 <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
                                     {t.hasChildrenLabel}
@@ -202,7 +316,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                 </div>
                             </div>
 
-                            {/* Деталі про дітей */}
+                            {/* Children details */}
                             {formData.hasChildren === 'yes' && (
                                 <div className="p-4 bg-[#FAF7F2] rounded-xl border border-[#E6D5BC]/60 space-y-4">
                                     <h4 className="text-xs font-medium uppercase tracking-wider text-[#3D3433]">
@@ -251,13 +365,14 @@ export default function Rsvp({ lang = 'ua' }) {
                                 </div>
                             )}
 
-                            {/* Адаптивне поле алергій/побажань */}
+                            {/* Dietary / Wishes */}
                             <div>
                                 <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
                                     {isPartyOnly ? t.dietLabelParty : t.dietLabelFull}
                                 </label>
                                 <textarea
                                     rows={2}
+                                    placeholder={t.dietPlaceholder}
                                     value={formData.dietary}
                                     onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
                                     className="w-full px-4 py-2 text-xs rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
@@ -268,10 +383,11 @@ export default function Rsvp({ lang = 'ua' }) {
 
                     <button
                         type="submit"
-                        className="w-full py-3 bg-[#C17A63] text-white rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#A9644F] transition shadow-md flex items-center justify-center gap-2"
+                        disabled={loading}
+                        className="w-full py-3 bg-[#C17A63] text-white rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#A9644F] transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                         <Send size={14} />
-                        {t.submitBtn}
+                        {loading ? t.sendingBtn : t.submitBtn}
                     </button>
                 </form>
             </div>
