@@ -144,7 +144,7 @@ export default function Rsvp({ lang = 'ua' }) {
         e.preventDefault();
         setLoading(true);
 
-        const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfF9Sz60X-aQG1LEvRfnbxuXXDfkjiiWDUDQ0X2U/formResponse";
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScWInPJ5435Cg5H7uzOitjAsuyI5u5Mn_EbZ3GRUFqaAb-uag/formResponse";
 
         // Формуємо повний список імен дорослих
         const allAdultsNames = [
