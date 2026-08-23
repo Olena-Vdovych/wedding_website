@@ -195,7 +195,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     </p>
                 </section>
             </ScrollReveal>
-            
+
             {/* PROGRAM (TIMELINE) */}
             {/* 
   ВНУТРІШНІЙ ТАЙМІНГ ДЛЯ НАРЕЧЕНИХ:
@@ -359,12 +359,33 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                     <p className="text-gray-600 leading-relaxed font-light">
                         {t.dressCodeText}
                     </p>
-                    <div className="flex justify-center gap-4 flex-wrap pt-4">
+
+                    {/* SVG filter для створення ефекту волокон тканини */}
+                    <svg className="hidden">
+                        <filter id="linen-texture">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise" />
+                            <feColorMatrix type="saturate" values="0" />
+                            <feComponentTransfer>
+                                <feFuncA type="linear" slope="0.15" /> {/* Регулює інтенсивність текстури */}
+                            </feComponentTransfer>
+                            <feBlend in="SourceGraphic" mode="multiply" />
+                        </filter>
+                    </svg>
+
+                    <div className="flex justify-center gap-5 flex-wrap pt-4">
                         {colors.map((color, index) => (
                             <div key={index} className="flex flex-col items-center gap-2">
                                 <div
-                                    className={`w-14 h-14 rounded-full shadow-inner transform hover:scale-110 transition ${color.hex}`}
-                                ></div>
+                                    className={`w-14 h-14 rounded-full relative overflow-hidden shadow-sm transform hover:scale-110 transition duration-300 border border-[#E6D5BC] ${color.hex}`}
+                                >
+                                    {/* Реалістичний шар текстури тканини */}
+                                    <div
+                                        className="absolute inset-0 opacity-40 mix-blend-overlay bg-repeat"
+                                        style={{
+                                            backgroundImage: `url('https://www.transparenttextures.com/patterns/linen.png')`
+                                        }}
+                                    />
+                                </div>
                                 <span className="text-xs tracking-wider text-gray-500">
                                     {color.name}
                                 </span>
@@ -374,16 +395,16 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                 </section>
             </ScrollReveal>
 
-          {/* COUNTDOWN TIMER */}
-<ScrollReveal>
-    <section className="text-center py-8">
-        <h1 className="font-serif text-4xl text-[#3D3433]">Olena & Dennis</h1>
-        <p className="text-sm text-gray-500 mt-2">10.07.2027 • Beach Wedding</p>
+            {/* COUNTDOWN TIMER */}
+            <ScrollReveal>
+                <section className="text-center py-8">
+                    <h1 className="font-serif text-4xl text-[#3D3433]">Olena & Dennis</h1>
+                    <p className="text-sm text-gray-500 mt-2">10.07.2027 • Beach Wedding</p>
 
-        {/* Додаємо lang={lang} */}
-        <CountdownTimer lang={lang} targetDate="2027-07-10T14:00:00" />
-    </section>
-</ScrollReveal>
+                    {/* Додаємо lang={lang} */}
+                    <CountdownTimer lang={lang} targetDate="2027-07-10T14:00:00" />
+                </section>
+            </ScrollReveal>
 
             {/* RSVP FORM */}
             <ScrollReveal>
