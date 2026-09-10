@@ -1,41 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-export default function ScrollReveal({ children }) {
-    const [isVisible, setIsVisible] = useState(false);
-    const domRef = useRef();
+export default function ScrollReveal({ children, delay = 0 }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            // Зменшуємо поріг до 0.05, щоб анімація починалася трохи раніше 
-            // і гість не бачив порожнього екрана під час скролу
-            threshold: 0.05
-        });
-
-        if (domRef.current) {
-            observer.observe(domRef.current);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
         }
-
-        return () => {
-            if (domRef.current) observer.unobserve(domRef.current);
-        };
-    }, []);
-
-    return (
-        <div
-            ref={domRef}
-            className={`transition-all duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) transform ${isVisible
-                    ? 'opacity-100 translate-y-0 scale-100'
-                    : 'opacity-0 translate-y-6 scale-[0.97]'
-                }`}
-        >
-            {children}
-        </div>
+      },
+      {
+        threshold: 0.15, // Зону спрацьовування налаштовано на 15% видимості
+        rootMargin: "0px 0px -50px 0px", // Легка затримка перед появою для кращого ефекту
+      }
     );
+
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        transitionDuration: "1200ms", // Тривалість анімації (робить її дуже м'якою)
+        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)", // Елегантна бохо-крива плавності
+        transitionDelay: `${delay}ms`,
+      }}
+      className={`transform transition-all duration-1000 ${
+        isVisible
+          ? "opacity-100 translate-y-0 scale-100" // Фінальний стан: повністю проявлено і на своєму місці
+          : "opacity-0 translate-y-12 scale-95"    // Початковий стан: розчинено, зсунуто вниз і трохи зменшено
+      }`}
+    >
+      {children}
+    </div>
+  );
 }

@@ -6,7 +6,7 @@ const timerTranslations = {
     de: { days: 'Tage', hours: 'Stunden', minutes: 'Minuten', seconds: 'Sekunden' }
 };
 
-export default function CountdownTimer({ lang = 'ua', targetDate = "2027-07-10T15:00:00" }) {
+export default function CountdownTimer({ lang = 'ua', targetDate = "2027-07-10T14:00:00" }) {
     const t = timerTranslations[lang] || timerTranslations.ua;
 
     const calculateTimeLeft = () => {
@@ -45,12 +45,12 @@ export default function CountdownTimer({ lang = 'ua', targetDate = "2027-07-10T1
         <div className="py-6 flex justify-center items-center gap-3 md:gap-6">
             {timerItems.map((item, index) => (
                 <div key={index} className="flex flex-col items-center">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white/80 backdrop-blur-sm rounded-2xl border border-[#E6D5BC]/60 flex items-center justify-center shadow-sm">
-                        <span className="text-xl md:text-2xl font-serif text-[#C17A63] font-medium">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white/90 backdrop-blur-sm rounded-2xl border border-[#CBD5CC] flex items-center justify-center shadow-sm">
+                        <span className="text-xl md:text-2xl font-serif text-[#556652] font-semibold">
                             {String(item.value || 0).padStart(2, '0')}
                         </span>
                     </div>
-                    <span className="text-[10px] md:text-xs uppercase tracking-widest text-[#4A3E3D]/70 mt-2">
+                    <span className="text-[10px] md:text-xs uppercase tracking-widest text-[#2C352B]/70 mt-2 font-medium">
                         {item.label}
                     </span>
                 </div>

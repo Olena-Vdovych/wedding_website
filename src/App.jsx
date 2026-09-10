@@ -15,25 +15,37 @@ function App() {
   });
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden bg-[#FAF7F2]">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-[#F7F8F6]">
       
-      {/* 2. МЕНЮ ПЕРЕМИКАННЯ МОВИ (з кнопкою DE) */}
-      <div className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-[#E6D5BC] flex gap-2 text-xs font-medium">
+      {/* 2. МЕНЮ ПЕРЕМИКАННЯ МОВИ (з оновленими бохо-кольорами) */}
+      <div className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full shadow-xs border border-[#CBD5CC] flex gap-1.5 text-xs font-medium">
         <button 
           onClick={() => setLang('ua')} 
-          className={`px-2 py-1 rounded-full transition ${lang === 'ua' ? 'bg-[#C17A63] text-white' : 'text-[#4A3E3D] hover:bg-gray-100'}`}
+          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
+            lang === 'ua' 
+              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
+              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
+          }`}
         >
           UA
         </button>
         <button 
           onClick={() => setLang('nl')} 
-          className={`px-2 py-1 rounded-full transition ${lang === 'nl' ? 'bg-[#C17A63] text-white' : 'text-[#4A3E3D] hover:bg-gray-100'}`}
+          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
+            lang === 'nl' 
+              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
+              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
+          }`}
         >
           NL
         </button>
         <button 
           onClick={() => setLang('de')} 
-          className={`px-2 py-1 rounded-full transition ${lang === 'de' ? 'bg-[#C17A63] text-white' : 'text-[#4A3E3D] hover:bg-gray-100'}`}
+          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
+            lang === 'de' 
+              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
+              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
+          }`}
         >
           DE
         </button>

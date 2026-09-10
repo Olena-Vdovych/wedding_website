@@ -89,7 +89,7 @@ export default function Rsvp({ lang = 'ua' }) {
         mainName: '',
         attending: 'yes',
         adultsCount: 1,
-        additionalAdults: [], // Масив для імен додаткових дорослих
+        additionalAdults: [],
         hasChildren: 'no',
         dietary: ''
     });
@@ -98,18 +98,15 @@ export default function Rsvp({ lang = 'ua' }) {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // Зміна кількості дорослих
     const handleAdultsCountChange = (count) => {
         const newCount = Math.max(1, count);
         const currentAdditional = [...formData.additionalAdults];
         
         if (newCount - 1 > currentAdditional.length) {
-            // Додаємо порожні поля для нових дорослих
             while (currentAdditional.length < newCount - 1) {
                 currentAdditional.push('');
             }
         } else {
-            // Обрізаємо масив якщо кількість зменшилась
             currentAdditional.length = newCount - 1;
         }
 
@@ -146,13 +143,11 @@ export default function Rsvp({ lang = 'ua' }) {
 
         const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScWInPJ5435Cg5H7uzOitjAsuyI5u5Mn_EbZ3GRUFqaAb-uag/formResponse";
 
-        // Формуємо повний список імен дорослих
         const allAdultsNames = [
             formData.mainName,
             ...formData.additionalAdults.filter(name => name.trim() !== '')
         ].join(', ');
 
-        // Інформація про дітей
         const childrenCount = formData.hasChildren === 'yes' ? children.length : 0;
         const childrenDetails = formData.hasChildren === 'yes'
             ? children.map(c => `${c.name} (${c.age} y.o.)`).join(', ')
@@ -161,11 +156,11 @@ export default function Rsvp({ lang = 'ua' }) {
         const childrenString = childrenCount > 0 ? `${childrenCount} (${childrenDetails})` : '0';
 
         const formPayload = new URLSearchParams();
-        formPayload.append("entry.280550367", allAdultsNames);                                            // Full name (Усі дорослі)
-        formPayload.append("entry.1728895548", formData.attending === 'yes' ? 'Yes' : 'No');             // Will you join us?
-        formPayload.append("entry.655186030", formData.attending === 'yes' ? formData.adultsCount : 0); // Number of Adults
-        formPayload.append("entry.1289813742", formData.attending === 'yes' ? childrenString : '0');      // Number of Children
-        formPayload.append("entry.15760116", formData.dietary || 'None');                                // Alergie / Proposal
+        formPayload.append("entry.280550367", allAdultsNames);
+        formPayload.append("entry.1728895548", formData.attending === 'yes' ? 'Yes' : 'No');
+        formPayload.append("entry.655186030", formData.attending === 'yes' ? formData.adultsCount : 0);
+        formPayload.append("entry.1289813742", formData.attending === 'yes' ? childrenString : '0');
+        formPayload.append("entry.15760116", formData.dietary || 'None');
 
         try {
             await fetch(GOOGLE_FORM_URL, {
@@ -187,29 +182,29 @@ export default function Rsvp({ lang = 'ua' }) {
 
     if (submitted) {
         return (
-            <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl border border-[#E6D5BC] shadow-md text-center space-y-4">
-                <div className="w-12 h-12 bg-[#C17A63]/10 text-[#C17A63] rounded-full flex items-center justify-center mx-auto">
+            <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl border border-[#CBD5CC] shadow-md text-center space-y-4">
+                <div className="w-12 h-12 bg-[#556652]/10 text-[#556652] rounded-full flex items-center justify-center mx-auto">
                     <Check size={24} />
                 </div>
-                <h3 className="text-xl font-serif text-[#3D3433]">{t.successMsg}</h3>
+                <h3 className="text-xl font-serif text-[#2C352B]">{t.successMsg}</h3>
             </div>
         );
     }
 
     return (
         <section className="max-w-2xl mx-auto px-6 py-12">
-            <div className="bg-white rounded-2xl border border-[#E6D5BC]/60 p-6 md:p-10 shadow-sm space-y-6">
+            <div className="bg-white rounded-2xl border border-[#CBD5CC]/60 p-6 md:p-10 shadow-sm space-y-6">
                 <div className="text-center space-y-2">
-                    <h2 className="text-2xl md:text-3xl font-serif text-[#3D3433]">
+                    <h2 className="text-2xl md:text-3xl font-serif text-[#2C352B]">
                         {t.title}
                     </h2>
-                    <p className="text-xs text-gray-500">{t.subtitle}</p>
+                    <p className="text-xs text-[#2C352B]/60">{t.subtitle}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Main Guest Name */}
                     <div>
-                        <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                        <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                             {t.nameLabel} *
                         </label>
                         <input
@@ -218,33 +213,35 @@ export default function Rsvp({ lang = 'ua' }) {
                             placeholder={t.namePlaceholder}
                             value={formData.mainName}
                             onChange={(e) => setFormData({ ...formData, mainName: e.target.value })}
-                            className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                            className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#CBD5CC] focus:outline-none focus:ring-1 focus:ring-[#556652]"
                         />
                     </div>
 
                     {/* Attendance */}
                     <div>
-                        <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                        <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                             {t.attendingLabel} *
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'yes' })}
-                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'yes'
-                                        ? 'bg-[#C17A63] text-white border-[#C17A63]'
-                                        : 'bg-white text-gray-600 border-[#E6D5BC] hover:bg-gray-50'
-                                    }`}
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${
+                                    formData.attending === 'yes'
+                                        ? 'bg-[#556652] text-white border-[#556652]'
+                                        : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
+                                }`}
                             >
                                 {t.attendingYes}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'no' })}
-                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'no'
-                                        ? 'bg-[#3D3433] text-white border-[#3D3433]'
-                                        : 'bg-white text-gray-600 border-[#E6D5BC] hover:bg-gray-50'
-                                    }`}
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${
+                                    formData.attending === 'no'
+                                        ? 'bg-[#2C352B] text-white border-[#2C352B]'
+                                        : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
+                                }`}
                             >
                                 {t.attendingNo}
                             </button>
@@ -256,7 +253,7 @@ export default function Rsvp({ lang = 'ua' }) {
                         <>
                             {/* Number of Adults */}
                             <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {t.adultsLabel} *
                                 </label>
                                 <input
@@ -266,14 +263,14 @@ export default function Rsvp({ lang = 'ua' }) {
                                     required
                                     value={formData.adultsCount}
                                     onChange={(e) => handleAdultsCountChange(parseInt(e.target.value) || 1)}
-                                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#CBD5CC] focus:outline-none focus:ring-1 focus:ring-[#556652]"
                                 />
                             </div>
 
                             {/* Additional Adults Names */}
                             {formData.additionalAdults.map((guestName, index) => (
-                                <div key={index} className="pl-4 border-l-2 border-[#C17A63]/40 space-y-2">
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D]">
+                                <div key={index} className="pl-4 border-l-2 border-[#556652]/40 space-y-2">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B]">
                                         {t.guestNameLabel} #{index + 2} *
                                     </label>
                                     <input
@@ -282,34 +279,36 @@ export default function Rsvp({ lang = 'ua' }) {
                                         placeholder={t.guestNamePlaceholder}
                                         value={guestName}
                                         onChange={(e) => handleAdditionalAdultChange(index, e.target.value)}
-                                        className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                        className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#CBD5CC] focus:outline-none focus:ring-1 focus:ring-[#556652]"
                                     />
                                 </div>
                             ))}
 
                             {/* Has Children */}
                             <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {t.hasChildrenLabel}
                                 </label>
                                 <div className="grid grid-cols-2 gap-3">
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, hasChildren: 'yes' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'yes'
-                                                ? 'bg-[#C17A63] text-white border-[#C17A63]'
-                                                : 'bg-white text-gray-600 border-[#E6D5BC]'
-                                            }`}
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${
+                                            formData.hasChildren === 'yes'
+                                                ? 'bg-[#556652] text-white border-[#556652]'
+                                                : 'bg-white text-gray-600 border-[#CBD5CC]'
+                                        }`}
                                     >
                                         {t.hasChildrenYes}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, hasChildren: 'no' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'no'
-                                                ? 'bg-[#C17A63] text-white border-[#C17A63]'
-                                                : 'bg-white text-gray-600 border-[#E6D5BC]'
-                                            }`}
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${
+                                            formData.hasChildren === 'no'
+                                                ? 'bg-[#556652] text-white border-[#556652]'
+                                                : 'bg-white text-gray-600 border-[#CBD5CC]'
+                                        }`}
                                     >
                                         {t.hasChildrenNo}
                                     </button>
@@ -318,8 +317,8 @@ export default function Rsvp({ lang = 'ua' }) {
 
                             {/* Children details */}
                             {formData.hasChildren === 'yes' && (
-                                <div className="p-4 bg-[#FAF7F2] rounded-xl border border-[#E6D5BC]/60 space-y-4">
-                                    <h4 className="text-xs font-medium uppercase tracking-wider text-[#3D3433]">
+                                <div className="p-4 bg-[#F4F6F4] rounded-xl border border-[#CBD5CC]/60 space-y-4">
+                                    <h4 className="text-xs font-medium uppercase tracking-wider text-[#2C352B]">
                                         👶 {t.childrenTitle}
                                     </h4>
 
@@ -331,7 +330,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                                 required
                                                 value={child.name}
                                                 onChange={(e) => handleChildChange(index, 'name', e.target.value)}
-                                                className="flex-1 px-3 py-2 text-xs rounded-lg border border-[#E6D5BC] bg-white focus:outline-none"
+                                                className="flex-1 px-3 py-2 text-xs rounded-lg border border-[#CBD5CC] bg-white focus:outline-none focus:ring-1 focus:ring-[#556652]"
                                             />
                                             <input
                                                 type="number"
@@ -341,7 +340,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                                 max="17"
                                                 value={child.age}
                                                 onChange={(e) => handleChildChange(index, 'age', e.target.value)}
-                                                className="w-24 px-3 py-2 text-xs rounded-lg border border-[#E6D5BC] bg-white focus:outline-none"
+                                                className="w-24 px-3 py-2 text-xs rounded-lg border border-[#CBD5CC] bg-white focus:outline-none focus:ring-1 focus:ring-[#556652]"
                                             />
                                             {children.length > 1 && (
                                                 <button
@@ -358,7 +357,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                     <button
                                         type="button"
                                         onClick={addChild}
-                                        className="inline-flex items-center gap-1 text-xs text-[#C17A63] font-medium hover:underline pt-1"
+                                        className="inline-flex items-center gap-1 text-xs text-[#556652] font-medium hover:underline pt-1"
                                     >
                                         <Plus size={14} /> {t.addChildBtn}
                                     </button>
@@ -367,7 +366,7 @@ export default function Rsvp({ lang = 'ua' }) {
 
                             {/* Dietary / Wishes */}
                             <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#4A3E3D] mb-2">
+                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {isPartyOnly ? t.dietLabelParty : t.dietLabelFull}
                                 </label>
                                 <textarea
@@ -375,7 +374,7 @@ export default function Rsvp({ lang = 'ua' }) {
                                     placeholder={t.dietPlaceholder}
                                     value={formData.dietary}
                                     onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
-                                    className="w-full px-4 py-2 text-xs rounded-lg border border-[#E6D5BC] focus:outline-none focus:ring-1 focus:ring-[#C17A63]"
+                                    className="w-full px-4 py-2 text-xs rounded-lg border border-[#CBD5CC] focus:outline-none focus:ring-1 focus:ring-[#556652]"
                                 ></textarea>
                             </div>
                         </>
@@ -384,7 +383,7 @@ export default function Rsvp({ lang = 'ua' }) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 bg-[#C17A63] text-white rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#A9644F] transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+                        className="w-full py-3 bg-[#556652] text-white rounded-lg text-xs font-medium uppercase tracking-wider hover:bg-[#445242] transition shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                         <Send size={14} />
                         {loading ? t.sendingBtn : t.submitBtn}
