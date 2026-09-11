@@ -101,7 +101,7 @@ export default function Rsvp({ lang = 'ua' }) {
     const handleAdultsCountChange = (count) => {
         const newCount = Math.max(1, count);
         const currentAdditional = [...formData.additionalAdults];
-        
+
         if (newCount - 1 > currentAdditional.length) {
             while (currentAdditional.length < newCount - 1) {
                 currentAdditional.push('');
@@ -226,22 +226,20 @@ export default function Rsvp({ lang = 'ua' }) {
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'yes' })}
-                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${
-                                    formData.attending === 'yes'
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'yes'
                                         ? 'bg-[#556652] text-white border-[#556652]'
                                         : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
-                                }`}
+                                    }`}
                             >
                                 {t.attendingYes}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'no' })}
-                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${
-                                    formData.attending === 'no'
+                                className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'no'
                                         ? 'bg-[#2C352B] text-white border-[#2C352B]'
                                         : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
-                                }`}
+                                    }`}
                             >
                                 {t.attendingNo}
                             </button>
@@ -251,20 +249,32 @@ export default function Rsvp({ lang = 'ua' }) {
                     {/* Additional fields if attending */}
                     {formData.attending === 'yes' && (
                         <>
-                            {/* Number of Adults */}
+                            {/* Кількість дорослих */}
                             <div>
                                 <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {t.adultsLabel} *
                                 </label>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="10"
-                                    required
-                                    value={formData.adultsCount}
-                                    onChange={(e) => handleAdultsCountChange(parseInt(e.target.value) || 1)}
-                                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-[#CBD5CC] focus:outline-none focus:ring-1 focus:ring-[#556652]"
-                                />
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAdultsCountChange(formData.adultsCount - 1)}
+                                        disabled={formData.adultsCount <= 1}
+                                        className="w-10 h-10 rounded-lg border border-[#CBD5CC] bg-white text-[#2C352B] flex items-center justify-center text-lg font-bold hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                                    >
+                                        –
+                                    </button>
+                                    <span className="w-8 text-center text-base font-semibold text-[#2C352B]">
+                                        {formData.adultsCount}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAdultsCountChange(formData.adultsCount + 1)}
+                                        disabled={formData.adultsCount >= 10}
+                                        className="w-10 h-10 rounded-lg border border-[#CBD5CC] bg-white text-[#2C352B] flex items-center justify-center text-lg font-bold hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                                    >
+                                        +
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Additional Adults Names */}
@@ -293,22 +303,20 @@ export default function Rsvp({ lang = 'ua' }) {
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, hasChildren: 'yes' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${
-                                            formData.hasChildren === 'yes'
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'yes'
                                                 ? 'bg-[#556652] text-white border-[#556652]'
                                                 : 'bg-white text-gray-600 border-[#CBD5CC]'
-                                        }`}
+                                            }`}
                                     >
                                         {t.hasChildrenYes}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, hasChildren: 'no' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${
-                                            formData.hasChildren === 'no'
+                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'no'
                                                 ? 'bg-[#556652] text-white border-[#556652]'
                                                 : 'bg-white text-gray-600 border-[#CBD5CC]'
-                                        }`}
+                                            }`}
                                     >
                                         {t.hasChildrenNo}
                                     </button>
