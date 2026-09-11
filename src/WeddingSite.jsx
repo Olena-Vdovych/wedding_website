@@ -15,7 +15,7 @@ import {
   Sparkles,
   Sun,
   Waves,
-  Car, 
+  Car,
   Mail
 } from "lucide-react";
 import couplePhoto from "./assets/couple.webp";
@@ -101,7 +101,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
   return (
     <div className="min-h-screen bg-[#F7F8F6] text-[#2C352B] font-sans antialiased selection:bg-[#8A9A86] selection:text-white relative overflow-x-hidden">
-      
+
       {/* М'які бохо-плями з плавним мерехтінням вздовж усього сайту */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <div className="absolute top-[-5%] left-[-5%] w-96 h-96 bg-[#D8C2A8]/30 rounded-full blur-3xl animate-pulse" />
@@ -111,7 +111,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
       {/* HERO SECTION */}
       <header className="relative min-h-screen flex flex-col md:flex-row items-center justify-center px-4 md:px-12 max-w-6xl mx-auto py-12 gap-8 md:gap-4 bg-gradient-to-b from-[#E2E8E1]/40 via-transparent to-transparent z-10">
-        
+
         {/* Анімовані падаючі та покачувані пелюстки */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           {[...Array(10)].map((_, i) => {
@@ -209,7 +209,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
           </div>
 
           <h2 className="text-3xl font-serif text-[#2C352B] tracking-wide">{t.storyTitle}</h2>
-          
+
           <p className="text-gray-600 leading-relaxed font-light md:text-lg italic px-4">
             "{t.storyText}"
           </p>
@@ -322,15 +322,15 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                 <p className="text-gray-600 font-light">{t.venueAddress}</p>
               </div>
 
-             <div className="p-5 bg-white/80 rounded-2xl border border-[#E2E8E1] shadow-xs space-y-2 text-left backdrop-blur-xs hover:shadow-md transition-shadow group">
-  <h4 className="text-sm font-medium tracking-wide text-[#2C352B] uppercase flex items-center gap-2">
-    <Car size={18} className="text-[#556652] group-hover:scale-110 transition-transform" />
-    {t.parkingTitle}
-  </h4>
-  <p className="text-xs text-gray-500 leading-relaxed font-light group-hover:text-gray-700 transition-colors">
-    {t.parkingText}
-  </p>
-</div>
+              <div className="p-5 bg-white/80 rounded-2xl border border-[#E2E8E1] shadow-xs space-y-2 text-left backdrop-blur-xs hover:shadow-md transition-shadow group">
+                <h4 className="text-sm font-medium tracking-wide text-[#2C352B] uppercase flex items-center gap-2">
+                  <Car size={18} className="text-[#556652] group-hover:scale-110 transition-transform" />
+                  {t.parkingTitle}
+                </h4>
+                <p className="text-xs text-gray-500 leading-relaxed font-light group-hover:text-gray-700 transition-colors">
+                  {t.parkingText}
+                </p>
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <a
@@ -369,53 +369,52 @@ export default function WeddingSite({ lang = "ua", setLang }) {
         </section>
       </ScrollReveal>
 
-   {/* DRESS CODE */}
-<ScrollReveal>
-  <section className="max-w-3xl mx-auto px-6 py-20 text-center space-y-8">
-    <h2 className="text-3xl font-serif text-[#2C352B] flex justify-center items-center gap-3">
-      <Shirt size={24} className="text-[#556652]" /> {t.dressCodeTitle}
-    </h2>
-    
-    <p className="text-gray-600 leading-relaxed font-light max-w-xl mx-auto">
-      {t.dressCodeText}
-    </p>
+      {/* DRESS CODE */}
+      <ScrollReveal>
+        <section className="max-w-3xl mx-auto px-6 py-20 text-center space-y-8">
+          <h2 className="text-3xl font-serif text-[#2C352B] flex justify-center items-center gap-3">
+            <Shirt size={24} className="text-[#556652]" /> {t.dressCodeTitle}
+          </h2>
 
-    {/* Рівномірна сітка для кольорів із чітким вирівнюванням */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pt-6 max-w-2xl mx-auto justify-items-center">
-      {colors.map((color, index) => (
-        <div key={index} className="flex flex-col items-center gap-3 group cursor-pointer w-24">
-          <div
-            className={`w-14 h-14 rounded-full relative overflow-hidden shadow-sm transform group-hover:scale-110 group-hover:shadow-md transition-all duration-300 border-2 border-white ring-1 ring-black/5 ${color.hex}`}
-          >
-            {/* Текстура льону поверх кольору */}
-            <div
-              className="absolute inset-0 opacity-20 mix-blend-overlay bg-repeat"
-              style={{
-                backgroundImage: `url('https://www.transparenttextures.com/patterns/linen.png')`
-              }}
-            />
+          <p className="text-gray-600 leading-relaxed font-light max-w-xl mx-auto">
+            {t.dressCodeText}
+          </p>
+
+          {/* Палітра кольорів */}
+          <div className="flex justify-center items-center gap-3 md:gap-6 flex-nowrap pt-2 max-w-full overflow-x-auto px-2">
+            {colors.map((color, index) => (
+              <div key={index} className="flex flex-col items-center gap-1.5 flex-shrink-0">
+                <div
+                  className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full relative overflow-hidden shadow-sm transform hover:scale-110 transition duration-300 border border-[#E6D5BC] ${color.hex}`}
+                >
+                  <div
+                    className="absolute inset-0 opacity-40 mix-blend-overlay bg-repeat"
+                    style={{
+                      backgroundImage: `url('https://www.transparenttextures.com/patterns/linen.png')`
+                    }}
+                  />
+                </div>
+                <span className="text-[10px] sm:text-xs tracking-tight text-gray-600 text-center whitespace-nowrap">
+                  {color.name}
+                </span>
+              </div>
+            ))}
           </div>
-          <span className="text-xs tracking-wide text-gray-600 font-medium text-center leading-tight group-hover:text-[#2C352B] transition-colors">
-            {color.name}
-          </span>
-        </div>
-      ))}
-    </div>
 
-    {/* Прохання від нареченої з оновленою тонкою акцентною лінією */}
-    <div className="mt-10 p-6 bg-white/90 rounded-2xl border border-[#E2E8E1] max-w-lg mx-auto shadow-xs relative overflow-hidden group hover:shadow-md transition-shadow">
-      <div className="absolute top-0 left-0 w-1.5 h-full bg-[#8A9A86]" />
-      <p className="text-sm text-[#2C352B] font-normal leading-relaxed text-center">
-        {lang === 'nl' 
-          ? "Verzoek van de bruid: laat wit, ivory en lichte crèmetinten alsjeblieft exclusief voor de bruid 🤍"
-          : lang === 'de'
-            ? "Bitte der Braut: Bitte überlasst Weiß, Ivory und helle Cremetöne ausschließlich der Braut 🤍"
-            : "Прохання від нареченої: будь ласка, залишіть білий, айворі (Ivory) та світло-кремові відтінки виключно для головної героїні свята 🤍"
-        }
-      </p>
-    </div>
-  </section>
-</ScrollReveal>
+          {/* Прохання від нареченої з оновленою тонкою акцентною лінією */}
+          <div className="mt-10 p-6 bg-white/90 rounded-2xl border border-[#E2E8E1] max-w-lg mx-auto shadow-xs relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#8A9A86]" />
+            <p className="text-sm text-[#2C352B] font-normal leading-relaxed text-center">
+              {lang === 'nl'
+                ? "Verzoek van de bruid: laat wit, ivory en lichte crèmetinten alsjeblieft exclusief voor de bruid 🤍"
+                : lang === 'de'
+                  ? "Bitte der Braut: Bitte überlasst Weiß, Ivory und helle Cremetöne ausschließlich der Braut 🤍"
+                  : "Прохання від нареченої: будь ласка, залишіть білий, айворі (Ivory) та світло-кремові відтінки виключно для головної героїні свята 🤍"
+              }
+            </p>
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* COUNTDOWN TIMER */}
       <ScrollReveal>
@@ -430,35 +429,35 @@ export default function WeddingSite({ lang = "ua", setLang }) {
         </section>
       </ScrollReveal>
 
-  {/* GIFTS SECTION */}
-<ScrollReveal>
-  <section className="max-w-xl mx-auto px-6 py-12 text-center space-y-4">
-    
-    {/* Подвійна бохо-іконка: Подарунок та Конверт */}
-    <div className="flex justify-center items-center gap-3">
-      <div className="w-12 h-12 bg-[#E2E8E1]/70 border border-[#CBD5CC] rounded-full flex items-center justify-center text-[#556652] shadow-xs hover:rotate-12 hover:scale-110 transition-transform duration-300">
-        <Gift size={22} strokeWidth={1.8} />
-      </div>
-      <div className="w-10 h-10 bg-white border border-[#CBD5CC] rounded-full flex items-center justify-center text-[#8A9A86] shadow-xs hover:-rotate-12 hover:scale-110 transition-transform duration-300">
-        <Mail size={18} strokeWidth={1.8} />
-      </div>
-    </div>
+      {/* GIFTS SECTION */}
+      <ScrollReveal>
+        <section className="max-w-xl mx-auto px-6 py-12 text-center space-y-4">
 
-    <h3 className="text-2xl font-serif text-[#2C352B]">
-      {lang === 'nl' ? 'Cadeautip' : lang === 'de' ? 'Geschenkwunsch' : 'Побажання щодо подарунків'}
-    </h3>
+          {/* Подвійна бохо-іконка: Подарунок та Конверт */}
+          <div className="flex justify-center items-center gap-3">
+            <div className="w-12 h-12 bg-[#E2E8E1]/70 border border-[#CBD5CC] rounded-full flex items-center justify-center text-[#556652] shadow-xs hover:rotate-12 hover:scale-110 transition-transform duration-300">
+              <Gift size={22} strokeWidth={1.8} />
+            </div>
+            <div className="w-10 h-10 bg-white border border-[#CBD5CC] rounded-full flex items-center justify-center text-[#8A9A86] shadow-xs hover:-rotate-12 hover:scale-110 transition-transform duration-300">
+              <Mail size={18} strokeWidth={1.8} />
+            </div>
+          </div>
 
-    {/* Текст без стандартного кольорового емодзі 💌 */}
-    <p className="text-xs md:text-sm text-gray-600 font-light leading-relaxed max-w-lg mx-auto">
-      {lang === 'nl'
-        ? 'Jullie aanwezigheid op onze bruiloft is voor ons het mooiste cadeau! Mocht je ons toch een cadeau willen geven, dan stellen wij een bijdrage in een enveloppe voor onze toekomst erg op prijs.'
-        : lang === 'de'
-          ? 'Eure Anwesenheit ist für uns das größte Geschenk! Wenn ihr uns dennoch eine Freude machen möchtet, freuen wir uns über einen Beitrag in einem Umschlag für unsere gemeinsame Zukunft.'
-          : 'Ваша присутність — це найбільший подарунок для нас! Якщо ви бажаєте привітати нас подарунком, ми будемо щиро вдячні за внесок у конверті в наш сімейний бюджет та майбутні подорожі.'
-      }
-    </p>
-  </section>
-</ScrollReveal>
+          <h3 className="text-2xl font-serif text-[#2C352B]">
+            {lang === 'nl' ? 'Cadeautip' : lang === 'de' ? 'Geschenkwunsch' : 'Побажання щодо подарунків'}
+          </h3>
+
+          {/* Текст без стандартного кольорового емодзі 💌 */}
+          <p className="text-xs md:text-sm text-gray-600 font-light leading-relaxed max-w-lg mx-auto">
+            {lang === 'nl'
+              ? 'Jullie aanwezigheid op onze bruiloft is voor ons het mooiste cadeau! Mocht je ons toch een cadeau willen geven, dan stellen wij een bijdrage in een enveloppe voor onze toekomst erg op prijs.'
+              : lang === 'de'
+                ? 'Eure Anwesenheit ist für uns das größte Geschenk! Wenn ihr uns dennoch eine Freude machen möchtet, freuen wir uns über einen Beitrag in einem Umschlag für unsere gemeinsame Zukunft.'
+                : 'Ваша присутність — це найбільший подарунок для нас! Якщо ви бажаєте привітати нас подарунком, ми будемо щиро вдячні за внесок у конверті в наш сімейний бюджет та майбутні подорожі.'
+            }
+          </p>
+        </section>
+      </ScrollReveal>
 
       {/* RSVP FORM */}
       <ScrollReveal>
