@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Send, Check } from 'lucide-react';
+import { Send, Check } from 'lucide-react';
+import { RSVP_DEADLINE } from './config';
 
 const translations = {
     ua: {
         title: "Підтвердження присутності",
-        subtitle: "Будь ласка, дайте відповідь до 1 травня 2027 року",
+        subtitle: (date) => `Будь ласка, дайте відповідь до ${date}`,
         nameLabel: "Ваше ім'я та прізвище (Головний гість)",
         namePlaceholder: "напр. Тарас Шевченко",
         attendingLabel: "Чи зможете ви бути з нами?",
@@ -13,13 +14,8 @@ const translations = {
         adultsLabel: "Загальна кількість дорослих",
         guestNameLabel: "Ім'я та прізвище супроводжуючого гостя",
         guestNamePlaceholder: "напр. Олена Шевченко",
-        hasChildrenLabel: "Чи буде з вами дитина?",
-        hasChildrenYes: "Так, будемо з дитиною",
-        hasChildrenNo: "Ні, без дітей",
-        childrenTitle: "Відомості про дітей (для ресторану)",
-        addChildBtn: "+ Додати дитину",
-        childName: "Ім'я дитини",
-        childAge: "Вік",
+        childFreeNote: "Ми дуже любимо маленьких гостей, але вирішили зробити наше весілля святом лише для дорослих, тому просимо вас прийти без дітей. Дякуємо за розуміння! Якщо у вас особлива ситуація, будь ласка, напишіть або зателефонуйте нам — ми обов'язково все обговоримо 🤍",
+        childFreeContact: "Зв'язатися з нами:",
         dietLabelFull: "Обмеження в харчуванні, алергії або особливі побажання (необов'язково)",
         dietLabelParty: "Особливі побажання щодо напоїв або алергії (необов'язково)",
         dietPlaceholder: "напр. Вегетаріанство, алергія на горіхи, веган...",
@@ -29,7 +25,7 @@ const translations = {
     },
     nl: {
         title: "Aanwezigheid bevestigen",
-        subtitle: "Laat het ons weten voor 1 mei 2027",
+        subtitle: (date) => `Laat het ons weten voor ${date}`,
         nameLabel: "Volledige naam (Hoofdgast)",
         namePlaceholder: "bijv. Jan de Vries",
         attendingLabel: "Ben je erbij?",
@@ -38,13 +34,8 @@ const translations = {
         adultsLabel: "Totaal aantal volwassenen",
         guestNameLabel: "Naam extra volwassene",
         guestNamePlaceholder: "bijv. Anna de Vries",
-        hasChildrenLabel: "Komen er kinderen mee?",
-        hasChildrenYes: "Ja, er komen kinderen mee",
-        hasChildrenNo: "Nee, geen kinderen",
-        childrenTitle: "Gegevens van de kinderen (voor de locatie)",
-        addChildBtn: "+ Kind toevoegen",
-        childName: "Naam kind",
-        childAge: "Leeftijd",
+        childFreeNote: "Wij zijn dol op de kleintjes, maar hebben ervoor gekozen om onze bruiloft een feest voor alleen volwassenen te maken. Daarom vragen we je om zonder kinderen te komen. Bedankt voor je begrip! Heb je een bijzondere situatie? Stuur of bel ons gerust, dan bespreken we het zeker samen 🤍",
+        childFreeContact: "Contact:",
         dietLabelFull: "Dieetwensen, allergieën of speciale verzoeken (optioneel)",
         dietLabelParty: "Speciale drankwensen of allergieën (optioneel)",
         dietPlaceholder: "bijv. Vegetarisch, glutenvrij, nootallergie...",
@@ -54,7 +45,7 @@ const translations = {
     },
     de: {
         title: "Anwesenheit bestätigen",
-        subtitle: "Bitte antworten Sie bis zum 1. Mai 2027",
+        subtitle: (date) => `Bitte antworte bis zum ${date}`,
         nameLabel: "Vollständiger Name (Hauptgast)",
         namePlaceholder: "z.B. Max Mustermann",
         attendingLabel: "Wirst du dabei sein?",
@@ -63,20 +54,28 @@ const translations = {
         adultsLabel: "Gesamtzahl der Erwachsenen",
         guestNameLabel: "Name des begleitenden Gastes",
         guestNamePlaceholder: "z.B. Erika Mustermann",
-        hasChildrenLabel: "Bringen Sie Kinder mit?",
-        hasChildrenYes: "Ja, mit Kindern",
-        hasChildrenNo: "Nein, ohne Kinder",
-        childrenTitle: "Angaben zu den Kindern (für das Restaurant)",
-        addChildBtn: "+ Kind hinzufügen",
-        childName: "Name des Kindes",
-        childAge: "Alter",
+        childFreeNote: "Wir lieben die Kleinen, haben uns aber entschieden, unsere Hochzeit nur für Erwachsene zu feiern, und bitten euch deshalb, ohne Kinder zu kommen. Danke für euer Verständnis! Habt ihr eine besondere Situation? Schreibt oder ruft uns einfach an – wir besprechen alles gern mit euch 🤍",
+        childFreeContact: "Kontakt:",
         dietLabelFull: "Diätetische Einschränkungen, Allergien oder besondere Wünsche (optional)",
         dietLabelParty: "Besondere Getränkewünsche oder Allergien (optional)",
         dietPlaceholder: "z.B. Vegetarisch, Glutenfrei, Nussallergie...",
         submitBtn: "Absenden",
         sendingBtn: "Wird gesendet...",
-        successMsg: "Vielen Dank! Ihre Antwort wurde erfolgreich gesendet ❤️"
+        successMsg: "Vielen Dank! Deine Antwort wurde erfolgreich gesendet ❤️"
     }
+};
+
+// Форматує дедлайн (RSVP_DEADLINE з config.js) мовою гостя
+const formatDeadline = (lang) => {
+    const date = new Date(`${RSVP_DEADLINE}T12:00:00`);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    if (lang === 'ua') {
+        const parts = new Intl.DateTimeFormat('uk-UA', options).formatToParts(date);
+        const get = (type) => parts.find((p) => p.type === type).value;
+        return `${get('day')} ${get('month')} ${get('year')} року`;
+    }
+    return new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'nl-NL', options).format(date);
 };
 
 export default function Rsvp({ lang = 'ua' }) {
@@ -90,11 +89,9 @@ export default function Rsvp({ lang = 'ua' }) {
         attending: 'yes',
         adultsCount: 1,
         additionalAdults: [],
-        hasChildren: 'no',
         dietary: ''
     });
 
-    const [children, setChildren] = useState([{ name: '', age: '' }]);
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -123,20 +120,6 @@ export default function Rsvp({ lang = 'ua' }) {
         setFormData({ ...formData, additionalAdults: updated });
     };
 
-    const addChild = () => {
-        setChildren([...children, { name: '', age: '' }]);
-    };
-
-    const removeChild = (index) => {
-        setChildren(children.filter((_, i) => i !== index));
-    };
-
-    const handleChildChange = (index, field, value) => {
-        const updated = [...children];
-        updated[index][field] = value;
-        setChildren(updated);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -148,18 +131,12 @@ export default function Rsvp({ lang = 'ua' }) {
             ...formData.additionalAdults.filter(name => name.trim() !== '')
         ].join(', ');
 
-        const childrenCount = formData.hasChildren === 'yes' ? children.length : 0;
-        const childrenDetails = formData.hasChildren === 'yes'
-            ? children.map(c => `${c.name} (${c.age} y.o.)`).join(', ')
-            : '0';
-
-        const childrenString = childrenCount > 0 ? `${childrenCount} (${childrenDetails})` : '0';
-
         const formPayload = new URLSearchParams();
         formPayload.append("entry.280550367", allAdultsNames);
         formPayload.append("entry.1728895548", formData.attending === 'yes' ? 'Yes' : 'No');
         formPayload.append("entry.655186030", formData.attending === 'yes' ? formData.adultsCount : 0);
-        formPayload.append("entry.1289813742", formData.attending === 'yes' ? childrenString : '0');
+        // Поле "діти" у Google Form залишаємо заповненим нулем (концепція без дітей)
+        formPayload.append("entry.1289813742", '0');
         formPayload.append("entry.15760116", formData.dietary || 'None');
 
         try {
@@ -198,7 +175,16 @@ export default function Rsvp({ lang = 'ua' }) {
                     <h2 className="text-2xl md:text-3xl font-serif text-[#2C352B]">
                         {t.title}
                     </h2>
-                    <p className="text-xs text-[#2C352B]/60">{t.subtitle}</p>
+                    <p className="text-xs text-[#2C352B]/60">{t.subtitle(formatDeadline(lang))}</p>
+                    <div className="text-xs text-[#556652] leading-relaxed bg-[#F4F6F4] border border-[#CBD5CC]/60 rounded-lg px-4 py-3 mt-3 space-y-2">
+                        <p className="italic">{t.childFreeNote}</p>
+                        <p className="not-italic text-[#2C352B]">
+                            {t.childFreeContact}{' '}
+                            <a href="tel:+380966440534" className="font-medium underline underline-offset-2 hover:text-[#556652]">Olena +380 96 644 0534</a>
+                            {' · '}
+                            <a href="tel:+31622348217" className="font-medium underline underline-offset-2 hover:text-[#556652]">Dennis +31 6 22348217</a>
+                        </p>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -293,84 +279,6 @@ export default function Rsvp({ lang = 'ua' }) {
                                     />
                                 </div>
                             ))}
-
-                            {/* Has Children */}
-                            <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
-                                    {t.hasChildrenLabel}
-                                </label>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() => setFormData({ ...formData, hasChildren: 'yes' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'yes'
-                                                ? 'bg-[#556652] text-white border-[#556652]'
-                                                : 'bg-white text-gray-600 border-[#CBD5CC]'
-                                            }`}
-                                    >
-                                        {t.hasChildrenYes}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setFormData({ ...formData, hasChildren: 'no' })}
-                                        className={`py-2 px-4 text-xs font-medium rounded-lg border transition ${formData.hasChildren === 'no'
-                                                ? 'bg-[#556652] text-white border-[#556652]'
-                                                : 'bg-white text-gray-600 border-[#CBD5CC]'
-                                            }`}
-                                    >
-                                        {t.hasChildrenNo}
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Children details */}
-                            {formData.hasChildren === 'yes' && (
-                                <div className="p-4 bg-[#F4F6F4] rounded-xl border border-[#CBD5CC]/60 space-y-4">
-                                    <h4 className="text-xs font-medium uppercase tracking-wider text-[#2C352B]">
-                                        👶 {t.childrenTitle}
-                                    </h4>
-
-                                    {children.map((child, index) => (
-                                        <div key={index} className="flex gap-2 items-center">
-                                            <input
-                                                type="text"
-                                                placeholder={t.childName}
-                                                required
-                                                value={child.name}
-                                                onChange={(e) => handleChildChange(index, 'name', e.target.value)}
-                                                className="flex-1 px-3 py-2 text-xs rounded-lg border border-[#CBD5CC] bg-white focus:outline-none focus:ring-1 focus:ring-[#556652]"
-                                            />
-                                            <input
-                                                type="number"
-                                                placeholder={t.childAge}
-                                                required
-                                                min="0"
-                                                max="17"
-                                                value={child.age}
-                                                onChange={(e) => handleChildChange(index, 'age', e.target.value)}
-                                                className="w-24 px-3 py-2 text-xs rounded-lg border border-[#CBD5CC] bg-white focus:outline-none focus:ring-1 focus:ring-[#556652]"
-                                            />
-                                            {children.length > 1 && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removeChild(index)}
-                                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))}
-
-                                    <button
-                                        type="button"
-                                        onClick={addChild}
-                                        className="inline-flex items-center gap-1 text-xs text-[#556652] font-medium hover:underline pt-1"
-                                    >
-                                        <Plus size={14} /> {t.addChildBtn}
-                                    </button>
-                                </div>
-                            )}
 
                             {/* Dietary / Wishes */}
                             <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WeddingSite from './WeddingSite';
 import Mail from './Mail';
 
@@ -13,6 +13,11 @@ function App() {
     if (browserLang.includes('nl')) return 'nl';
     return 'ua';
   });
+
+  // Оновлюємо атрибут lang у <html> при зміні мови (для доступності та браузерів)
+  useEffect(() => {
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+  }, [lang]);
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#F7F8F6]">

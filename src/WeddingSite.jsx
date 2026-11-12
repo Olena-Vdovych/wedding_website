@@ -26,6 +26,7 @@ import CountdownTimer from "./CountdownTimer";
 const translations = {
   ua: {
     names: "Денніс & Олена",
+    scrollDown: "Прокрутіть вниз",
     date: "10 Липня 2027",
     location: "Katwijk, Нідерланди",
     storyTitle: "Як усе починалося",
@@ -33,7 +34,7 @@ const translations = {
       "Часом доля обирає найнесподіваніші маршрути, щоб з'єднати серця українки та нідерландця. Ми знайшли один в одному свій дім. І для нас немає більшої радості, ніж зібрати найрідніших людей на солоному узбережжі Північного моря, щоб разом розпочати нову главу нашого життя.",
     programTitle: "Програма Дня",
     locationTitle: "Де все відбуватиметься",
-    venueName: "Пляжний павільйон «Surf and Beach»",
+    venueName: "Пляжний павільйон «Surf en Beach»",
     venueAddress: "Katwijk aan Zee, Нідерланди",
     parkingTitle: "Паркування",
     parkingText:
@@ -46,6 +47,7 @@ const translations = {
   },
   nl: {
     names: "Dennis & Olena",
+    scrollDown: "Scroll naar beneden",
     date: "10 Juli 2027",
     location: "Katwijk aan Zee, Nederland",
     storyTitle: "Hoe het allemaal begon",
@@ -53,7 +55,7 @@ const translations = {
       "Soms kiest het lot de meest onverwachte wegen om de harten van een Oekraïense en een Nederlander te verbinden. We hebben ons thuis in elkaar gevonden. Er is voor ons geen groter geluk dan onze dierbaarsten te verzamelen aan de kust van de Noordzee om samen aan dit nieuwe hoofdstuk van ons leven te beginnen.",
     programTitle: "Programma van de Dag",
     locationTitle: "Locatie & Parkeren",
-    venueName: "Strandpaviljoen «Surf and Beach»",
+    venueName: "Strandpaviljoen «Surf en Beach»",
     venueAddress: "Katwijk aan Zee, Nederland",
     parkingTitle: "Parkeergelegenheid",
     parkingText:
@@ -66,6 +68,7 @@ const translations = {
   },
   de: {
     names: "Dennis & Olena",
+    scrollDown: "Nach unten scrollen",
     date: "10 Juli 2027",
     location: "Katwijk aan Zee, Niederlande",
     storyTitle: "Wie alles begann",
@@ -73,7 +76,7 @@ const translations = {
       "Manchmal wählt das Schicksal die unerwartetsten Wege, um die Herzen einer Ukrainerin und eines Niederländers zu verbinden. Wir haben ineinander unser Zuhause gefunden. Es gibt für uns kein größeres Glück, als unsere Liebsten an der Nordseeküste zu versammeln, um gemeinsam dieses neue Kapitel unseres Lebens zu beginnen.",
     programTitle: "Tagesprogramm",
     locationTitle: "Ort & Parken",
-    venueName: "Strandpavillon «Surf and Beach»",
+    venueName: "Strandpavillon «Surf en Beach»",
     venueAddress: "Katwijk aan Zee, Niederlande",
     parkingTitle: "Parkmöglichkeiten",
     parkingText:
@@ -82,7 +85,7 @@ const translations = {
     calendarBtn: "In Kalender eintragen",
     dressCodeTitle: "Dresscode & Palette",
     dressCodeText:
-      "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lassen Sie die Stöckelschuhe bitte zu Hause! Wählen Sie luftige Stoffe und bequeme Schuhe.",
+      "Stil: Beach Boho Chic. Da die Zeremonie direkt am Strand stattfindet, lasst die Stöckelschuhe bitte zu Hause! Wählt luftige Stoffe und bequeme Schuhe.",
   }
 };
 
@@ -194,7 +197,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
         </div>
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest text-[#556652] animate-bounce flex items-center gap-1 font-medium">
-          <span>Scroll down</span>
+          <span>{t.scrollDown}</span>
         </div>
       </header>
 
@@ -450,7 +453,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
           {/* Текст без стандартного кольорового емодзі 💌 */}
           <p className="text-xs md:text-sm text-gray-600 font-light leading-relaxed max-w-lg mx-auto">
             {lang === 'nl'
-              ? 'Jullie aanwezigheid op onze bruiloft is voor ons het mooiste cadeau! Mocht je ons toch een cadeau willen geven, dan stellen wij een bijdrage in een enveloppe voor onze toekomst erg op prijs.'
+              ? 'Jullie aanwezigheid op onze bruiloft is voor ons het mooiste cadeau! Mochten jullie ons toch een cadeau willen geven, dan stellen wij een bijdrage in een enveloppe voor onze toekomst erg op prijs.'
               : lang === 'de'
                 ? 'Eure Anwesenheit ist für uns das größte Geschenk! Wenn ihr uns dennoch eine Freude machen möchtet, freuen wir uns über einen Beitrag in einem Umschlag für unsere gemeinsame Zukunft.'
                 : 'Ваша присутність — це найбільший подарунок для нас! Якщо ви бажаєте привітати нас подарунком, ми будемо щиро вдячні за внесок у конверті в наш сімейний бюджет та майбутні подорожі.'
