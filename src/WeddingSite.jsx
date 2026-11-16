@@ -21,6 +21,10 @@ import {
 import couplePhoto from "./assets/couple.webp";
 import ScrollReveal from "./ScrollReveal";
 import Rsvp from "./Rsvp";
+import Travel from "./Travel";
+import Faq from "./Faq";
+import PhotoShare from "./PhotoShare";
+import CalendarButton from "./CalendarButton";
 import CountdownTimer from "./CountdownTimer";
 
 const translations = {
@@ -164,7 +168,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
           <div className="flex items-center gap-3 my-2 opacity-0 animate-[fadeInElegant_2s_cubic-bezier(0.25,1,0.5,1)_both]" style={{ animationDelay: "1.2s" }}>
             <span className="h-[1px] w-12 bg-[#8A9A86]/60"></span>
-            <span className="text-xs uppercase tracking-widest text-[#8A9A86] font-serif italic">Beach Boho Wedding</span>
+            <span className="text-xs uppercase tracking-widest text-[#556652] font-serif italic">Beach Boho Wedding</span>
             <span className="h-[1px] w-12 bg-[#8A9A86]/60"></span>
           </div>
 
@@ -189,14 +193,14 @@ export default function WeddingSite({ lang = "ua", setLang }) {
           <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white bg-white group transform transition-all duration-700 hover:scale-[1.02]">
             <img
               src={couplePhoto}
-              alt="Dennis & Olena"
+              alt={lang === 'de' ? 'Foto von Dennis und Olena' : lang === 'nl' ? 'Foto van Dennis en Olena' : 'Фото: Денніс і Олена'}
               className="w-full h-full object-cover object-center scale-125 md:scale-125 transform transition-transform duration-1000 group-hover:scale-130"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2C352B]/30 via-transparent to-transparent pointer-events-none"></div>
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest text-[#556652] animate-bounce flex items-center gap-1 font-medium">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-widest text-[#556652] animate-bounce flex items-center gap-1 font-medium">
           <span>{t.scrollDown}</span>
         </div>
       </header>
@@ -236,25 +240,25 @@ export default function WeddingSite({ lang = "ua", setLang }) {
 
               {[
                 {
-                  time: "14:00",
+                  time: "13:30",
                   title: lang === "de" ? "Empfang der Gäste" : lang === "nl" ? "Ontvangst van gasten" : "Збір гостей на терасі",
                   icon: GlassWater,
                   forPartyOnly: false
                 },
                 {
-                  time: "14:30",
+                  time: "14:00",
                   title: lang === "de" ? "Hochzeitszeremonie am Strand" : lang === "nl" ? "Huwelijksceremonie op het strand" : "Весільна церемонія на піску",
                   icon: Heart,
                   forPartyOnly: false
                 },
                 {
-                  time: "15:30",
+                  time: "15:00",
                   title: lang === "de" ? "Glückwünsche, Fotos & Borrel" : lang === "nl" ? "Felicitaties, foto's & Borrel" : "Привітання, спільні фото & Borrel",
                   icon: Camera,
                   forPartyOnly: false
                 },
                 {
-                  time: "17:30",
+                  time: "17:00",
                   title: lang === "de" ? "Festliches Strand-BBQ" : lang === "nl" ? "Feestelijk Beach BBQ" : "Святковий Beach BBQ",
                   icon: Utensils,
                   forPartyOnly: false
@@ -293,7 +297,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                         <IconComponent size={16} />
                       </div>
 
-                      <time className="block md:absolute md:-left-28 md:top-1 text-sm font-mono tracking-wider font-semibold text-[#8A9A86] mb-1 md:mb-0 md:text-right md:w-20 group-hover:text-[#2C352B] transition-colors">
+                      <time className="block md:absolute md:-left-28 md:top-1 text-sm font-mono tracking-wider font-semibold text-[#556652] mb-1 md:mb-0 md:text-right md:w-20 group-hover:text-[#2C352B] transition-colors">
                         {item.time}
                       </time>
 
@@ -330,7 +334,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                   <Car size={18} className="text-[#556652] group-hover:scale-110 transition-transform" />
                   {t.parkingTitle}
                 </h4>
-                <p className="text-xs text-gray-500 leading-relaxed font-light group-hover:text-gray-700 transition-colors">
+                <p className="text-xs text-gray-600 leading-relaxed font-light group-hover:text-gray-800 transition-colors">
                   {t.parkingText}
                 </p>
               </div>
@@ -346,21 +350,13 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                   {t.googleMapsBtn}
                 </a>
 
-                <a
-                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dennis+%26+Olena+Wedding&dates=20270710T120000Z/20270710T220000Z&details=Beach+Boho+Wedding!&location=Strandpaviljoen+Surf+en+Beach,+Boulevard+Zeezijde+9,+2225+BB+Katwijk+aan+Zee"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#556652] text-white px-5 py-3 rounded-full text-xs font-medium uppercase tracking-wider hover:bg-[#435241] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 shadow-md"
-                >
-                  <Calendar size={14} />
-                  {t.calendarBtn}
-                </a>
+                <CalendarButton lang={lang} label={t.calendarBtn} isPartyOnly={isPartyOnly} />
               </div>
             </div>
 
             <div className="w-full aspect-video md:aspect-square rounded-2xl overflow-hidden shadow-lg border-4 border-white hover:shadow-2xl transition-shadow">
               <iframe
-                title="Google Maps Venue"
+                title={lang === 'de' ? 'Karte: Surf en Beach, Katwijk aan Zee' : lang === 'nl' ? 'Kaart: Surf en Beach, Katwijk aan Zee' : 'Карта: Surf en Beach, Katwijk aan Zee'}
                 src={`https://www.google.com/maps?q=Strandpaviljoen+Surf+en+Beach+Katwijk&output=embed&hl=${lang === 'de' ? 'de' : lang === 'nl' ? 'nl' : 'uk'}`}
                 className="w-full h-full border-0 grayscale-[15%] contrast-[95%]"
                 allowFullScreen=""
@@ -370,6 +366,11 @@ export default function WeddingSite({ lang = "ua", setLang }) {
             </div>
           </div>
         </section>
+      </ScrollReveal>
+
+      {/* TRAVEL & STAY */}
+      <ScrollReveal>
+        <Travel lang={lang} />
       </ScrollReveal>
 
       {/* DRESS CODE */}
@@ -393,7 +394,8 @@ export default function WeddingSite({ lang = "ua", setLang }) {
                   <div
                     className="absolute inset-0 opacity-40 mix-blend-overlay bg-repeat"
                     style={{
-                      backgroundImage: `url('https://www.transparenttextures.com/patterns/linen.png')`
+                      backgroundImage:
+                        'repeating-linear-gradient(0deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,0.14) 0 1px, transparent 1px 3px)'
                     }}
                   />
                 </div>
@@ -424,7 +426,7 @@ export default function WeddingSite({ lang = "ua", setLang }) {
         <section className="text-center py-12 relative">
           <div className="max-w-xl mx-auto px-6 py-8 bg-white/60 rounded-3xl border border-[#E2E8E1] backdrop-blur-xs shadow-xs hover:shadow-md transition-shadow">
             <h2 className="font-serif text-3xl text-[#2C352B]">Olena &amp; Dennis</h2>
-            <p className="text-xs text-gray-500 tracking-widest uppercase mt-2">10.07.2027 • Beach Wedding</p>
+            <p className="text-xs text-gray-600 tracking-widest uppercase mt-2">10.07.2027 • Beach Wedding</p>
             <div className="mt-6">
               <CountdownTimer lang={lang} targetDate="2027-07-10T14:00:00" />
             </div>
@@ -462,13 +464,23 @@ export default function WeddingSite({ lang = "ua", setLang }) {
         </section>
       </ScrollReveal>
 
+      {/* PHOTO SHARING (QR) — показується, коли в config.js вказано PHOTO_UPLOAD_URL */}
+      <ScrollReveal>
+        <PhotoShare lang={lang} />
+      </ScrollReveal>
+
+      {/* FAQ */}
+      <ScrollReveal>
+        <Faq lang={lang} isPartyOnly={isPartyOnly} />
+      </ScrollReveal>
+
       {/* RSVP FORM */}
       <ScrollReveal>
         <Rsvp lang={lang} />
       </ScrollReveal>
 
       {/* FOOTER */}
-      <footer className="text-center py-8 text-xs text-gray-400 border-t border-gray-200/60 relative z-10 flex flex-col items-center gap-2">
+      <footer className="text-center py-8 text-xs text-gray-500 border-t border-gray-200/60 relative z-10 flex flex-col items-center gap-2">
         <div className="flex gap-2 text-[#8A9A86] opacity-60">
           <Sparkles size={12} className="animate-spin-slow" />
           <Heart size={12} fill="currentColor" />

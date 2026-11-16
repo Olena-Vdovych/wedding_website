@@ -4,6 +4,38 @@
 @source "../index.html";
 @source "./**/*.{js,ts,jsx,tsx}";
 
+/* ШРИФТ: елегантний serif з підтримкою кирилиці (підключається в main.jsx) */
+@theme {
+    --font-serif: "Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", serif;
+}
+
+/* Рівні цифри (lining) для таймера, дат і часу у serif-шрифті */
+.font-serif {
+    font-variant-numeric: lining-nums;
+}
+
+/* ДОСТУПНІСТЬ: помітний фокус для навігації клавіатурою */
+:focus-visible {
+    outline: 2px solid #556652;
+    outline-offset: 2px;
+}
+
+/* ДОСТУПНІСТЬ: для тих, хто вимкнув анімації в системі (prefers-reduced-motion).
+   Самі анімації для решти гостей НЕ змінюються. */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 
 /* КЛАСИЧНІ BOHO ПЕЛЮСТКИ */
 @keyframes fall {

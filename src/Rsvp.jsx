@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Send, Check } from 'lucide-react';
-import { RSVP_DEADLINE } from './config';
+import ContactLinks from './ContactLinks';
+import { formatDeadline, isDeadlinePassed } from './dates';
+import { getGuestName } from './guest';
 
 const translations = {
     ua: {
@@ -16,6 +18,10 @@ const translations = {
         guestNamePlaceholder: "напр. Олена Шевченко",
         childFreeNote: "Ми дуже любимо маленьких гостей, але вирішили зробити наше весілля святом лише для дорослих, тому просимо вас прийти без дітей. Дякуємо за розуміння! Якщо у вас особлива ситуація, будь ласка, напишіть або зателефонуйте нам — ми обов'язково все обговоримо 🤍",
         childFreeContact: "Зв'язатися з нами:",
+        closedTitle: "Прийом відповідей завершено",
+        closedText: "Якщо ви ще не встигли відповісти або у вас змінились плани, будь ласка, напишіть або зателефонуйте нам:",
+        adultsMinus: "Зменшити кількість дорослих",
+        adultsPlus: "Збільшити кількість дорослих",
         dietLabelFull: "Обмеження в харчуванні, алергії або особливі побажання (необов'язково)",
         dietLabelParty: "Особливі побажання щодо напоїв або алергії (необов'язково)",
         dietPlaceholder: "напр. Вегетаріанство, алергія на горіхи, веган...",
@@ -36,6 +42,10 @@ const translations = {
         guestNamePlaceholder: "bijv. Anna de Vries",
         childFreeNote: "Wij zijn dol op de kleintjes, maar hebben ervoor gekozen om onze bruiloft een feest voor alleen volwassenen te maken. Daarom vragen we je om zonder kinderen te komen. Bedankt voor je begrip! Heb je een bijzondere situatie? Stuur of bel ons gerust, dan bespreken we het zeker samen 🤍",
         childFreeContact: "Contact:",
+        closedTitle: "Aanmelden is gesloten",
+        closedText: "Heb je nog niet gereageerd of zijn je plannen veranderd? Stuur of bel ons gerust:",
+        adultsMinus: "Minder volwassenen",
+        adultsPlus: "Meer volwassenen",
         dietLabelFull: "Dieetwensen, allergieën of speciale verzoeken (optioneel)",
         dietLabelParty: "Speciale drankwensen of allergieën (optioneel)",
         dietPlaceholder: "bijv. Vegetarisch, glutenvrij, nootallergie...",
@@ -56,6 +66,10 @@ const translations = {
         guestNamePlaceholder: "z.B. Erika Mustermann",
         childFreeNote: "Wir lieben die Kleinen, haben uns aber entschieden, unsere Hochzeit nur für Erwachsene zu feiern, und bitten euch deshalb, ohne Kinder zu kommen. Danke für euer Verständnis! Habt ihr eine besondere Situation? Schreibt oder ruft uns einfach an – wir besprechen alles gern mit euch 🤍",
         childFreeContact: "Kontakt:",
+        closedTitle: "Die Anmeldung ist geschlossen",
+        closedText: "Habt ihr noch nicht geantwortet oder haben sich eure Pläne geändert? Schreibt oder ruft uns einfach an:",
+        adultsMinus: "Weniger Erwachsene",
+        adultsPlus: "Mehr Erwachsene",
         dietLabelFull: "Diätetische Einschränkungen, Allergien oder besondere Wünsche (optional)",
         dietLabelParty: "Besondere Getränkewünsche oder Allergien (optional)",
         dietPlaceholder: "z.B. Vegetarisch, Glutenfrei, Nussallergie...",
@@ -65,19 +79,6 @@ const translations = {
     }
 };
 
-// Форматує дедлайн (RSVP_DEADLINE з config.js) мовою гостя
-const formatDeadline = (lang) => {
-    const date = new Date(`${RSVP_DEADLINE}T12:00:00`);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-
-    if (lang === 'ua') {
-        const parts = new Intl.DateTimeFormat('uk-UA', options).formatToParts(date);
-        const get = (type) => parts.find((p) => p.type === type).value;
-        return `${get('day')} ${get('month')} ${get('year')} року`;
-    }
-    return new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'nl-NL', options).format(date);
-};
-
 export default function Rsvp({ lang = 'ua' }) {
     const t = translations[lang] || translations.ua;
 
@@ -85,7 +86,7 @@ export default function Rsvp({ lang = 'ua' }) {
     const isPartyOnly = searchParams.get('type') === 'party';
 
     const [formData, setFormData] = useState({
-        mainName: '',
+        mainName: getGuestName(),
         attending: 'yes',
         adultsCount: 1,
         additionalAdults: [],
@@ -157,9 +158,23 @@ export default function Rsvp({ lang = 'ua' }) {
         }
     };
 
+    if (isDeadlinePassed()) {
+        return (
+            <section className="max-w-2xl mx-auto px-6 py-12">
+                <div className="bg-white rounded-2xl border border-[#CBD5CC]/60 p-6 md:p-10 shadow-sm text-center space-y-4">
+                    <h2 className="text-2xl md:text-3xl font-serif text-[#2C352B]">{t.closedTitle}</h2>
+                    <p className="text-sm text-[#2C352B]/80 leading-relaxed">{t.closedText}</p>
+                    <p className="text-sm text-[#2C352B]">
+                        <ContactLinks />
+                    </p>
+                </div>
+            </section>
+        );
+    }
+
     if (submitted) {
         return (
-            <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl border border-[#CBD5CC] shadow-md text-center space-y-4">
+            <div role="status" className="max-w-xl mx-auto p-8 bg-white rounded-2xl border border-[#CBD5CC] shadow-md text-center space-y-4">
                 <div className="w-12 h-12 bg-[#556652]/10 text-[#556652] rounded-full flex items-center justify-center mx-auto">
                     <Check size={24} />
                 </div>
@@ -175,14 +190,11 @@ export default function Rsvp({ lang = 'ua' }) {
                     <h2 className="text-2xl md:text-3xl font-serif text-[#2C352B]">
                         {t.title}
                     </h2>
-                    <p className="text-xs text-[#2C352B]/60">{t.subtitle(formatDeadline(lang))}</p>
+                    <p className="text-xs text-[#2C352B]/75">{t.subtitle(formatDeadline(lang))}</p>
                     <div className="text-xs text-[#556652] leading-relaxed bg-[#F4F6F4] border border-[#CBD5CC]/60 rounded-lg px-4 py-3 mt-3 space-y-2">
                         <p className="italic">{t.childFreeNote}</p>
                         <p className="not-italic text-[#2C352B]">
-                            {t.childFreeContact}{' '}
-                            <a href="tel:+380966440534" className="font-medium underline underline-offset-2 hover:text-[#556652]">Olena +380 96 644 0534</a>
-                            {' · '}
-                            <a href="tel:+31622348217" className="font-medium underline underline-offset-2 hover:text-[#556652]">Dennis +31 6 22348217</a>
+                            {t.childFreeContact} <ContactLinks />
                         </p>
                     </div>
                 </div>
@@ -190,12 +202,14 @@ export default function Rsvp({ lang = 'ua' }) {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Main Guest Name */}
                     <div>
-                        <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
+                        <label htmlFor="rsvp-name" className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                             {t.nameLabel} *
                         </label>
                         <input
+                            id="rsvp-name"
                             type="text"
                             required
+                            autoComplete="name"
                             placeholder={t.namePlaceholder}
                             value={formData.mainName}
                             onChange={(e) => setFormData({ ...formData, mainName: e.target.value })}
@@ -205,13 +219,14 @@ export default function Rsvp({ lang = 'ua' }) {
 
                     {/* Attendance */}
                     <div>
-                        <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
+                        <span id="rsvp-attending-label" className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                             {t.attendingLabel} *
-                        </label>
-                        <div className="grid grid-cols-2 gap-3">
+                        </span>
+                        <div role="group" aria-labelledby="rsvp-attending-label" className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'yes' })}
+                                aria-pressed={formData.attending === 'yes'}
                                 className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'yes'
                                         ? 'bg-[#556652] text-white border-[#556652]'
                                         : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
@@ -222,6 +237,7 @@ export default function Rsvp({ lang = 'ua' }) {
                             <button
                                 type="button"
                                 onClick={() => setFormData({ ...formData, attending: 'no' })}
+                                aria-pressed={formData.attending === 'no'}
                                 className={`py-2.5 px-4 text-xs font-medium rounded-lg border transition ${formData.attending === 'no'
                                         ? 'bg-[#2C352B] text-white border-[#2C352B]'
                                         : 'bg-white text-gray-600 border-[#CBD5CC] hover:bg-gray-50'
@@ -237,24 +253,26 @@ export default function Rsvp({ lang = 'ua' }) {
                         <>
                             {/* Кількість дорослих */}
                             <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
+                                <span id="rsvp-adults-label" className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {t.adultsLabel} *
-                                </label>
-                                <div className="flex items-center gap-3">
+                                </span>
+                                <div role="group" aria-labelledby="rsvp-adults-label" className="flex items-center gap-3">
                                     <button
                                         type="button"
                                         onClick={() => handleAdultsCountChange(formData.adultsCount - 1)}
+                                        aria-label={t.adultsMinus}
                                         disabled={formData.adultsCount <= 1}
                                         className="w-10 h-10 rounded-lg border border-[#CBD5CC] bg-white text-[#2C352B] flex items-center justify-center text-lg font-bold hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
                                     >
                                         –
                                     </button>
-                                    <span className="w-8 text-center text-base font-semibold text-[#2C352B]">
+                                    <span aria-live="polite" className="w-8 text-center text-base font-semibold text-[#2C352B]">
                                         {formData.adultsCount}
                                     </span>
                                     <button
                                         type="button"
                                         onClick={() => handleAdultsCountChange(formData.adultsCount + 1)}
+                                        aria-label={t.adultsPlus}
                                         disabled={formData.adultsCount >= 10}
                                         className="w-10 h-10 rounded-lg border border-[#CBD5CC] bg-white text-[#2C352B] flex items-center justify-center text-lg font-bold hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
                                     >
@@ -266,10 +284,11 @@ export default function Rsvp({ lang = 'ua' }) {
                             {/* Additional Adults Names */}
                             {formData.additionalAdults.map((guestName, index) => (
                                 <div key={index} className="pl-4 border-l-2 border-[#556652]/40 space-y-2">
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B]">
+                                    <label htmlFor={`rsvp-guest-${index}`} className="block text-xs font-medium uppercase tracking-wider text-[#2C352B]">
                                         {t.guestNameLabel} #{index + 2} *
                                     </label>
                                     <input
+                                        id={`rsvp-guest-${index}`}
                                         type="text"
                                         required
                                         placeholder={t.guestNamePlaceholder}
@@ -282,10 +301,11 @@ export default function Rsvp({ lang = 'ua' }) {
 
                             {/* Dietary / Wishes */}
                             <div>
-                                <label className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
+                                <label htmlFor="rsvp-diet" className="block text-xs font-medium uppercase tracking-wider text-[#2C352B] mb-2">
                                     {isPartyOnly ? t.dietLabelParty : t.dietLabelFull}
                                 </label>
                                 <textarea
+                                    id="rsvp-diet"
                                     rows={2}
                                     placeholder={t.dietPlaceholder}
                                     value={formData.dietary}

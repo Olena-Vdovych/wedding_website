@@ -22,38 +22,33 @@ function App() {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#F7F8F6]">
       
-      {/* 2. МЕНЮ ПЕРЕМИКАННЯ МОВИ (з оновленими бохо-кольорами) */}
-      <div className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full shadow-xs border border-[#CBD5CC] flex gap-1.5 text-xs font-medium">
-        <button 
-          onClick={() => setLang('ua')} 
-          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
-            lang === 'ua' 
-              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
-              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
-          }`}
-        >
-          UA
-        </button>
-        <button 
-          onClick={() => setLang('nl')} 
-          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
-            lang === 'nl' 
-              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
-              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
-          }`}
-        >
-          NL
-        </button>
-        <button 
-          onClick={() => setLang('de')} 
-          className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
-            lang === 'de' 
-              ? 'bg-[#8A9A86] text-white shadow-xs font-semibold' 
-              : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
-          }`}
-        >
-          DE
-        </button>
+      {/* 2. МЕНЮ ПЕРЕМИКАННЯ МОВИ */}
+      <div
+        role="group"
+        aria-label="Language / Мова / Taal / Sprache"
+        className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-md px-3 py-1.5 rounded-full shadow-xs border border-[#CBD5CC] flex gap-1.5 text-xs font-medium"
+      >
+        {[
+          { code: 'ua', label: 'UA', name: 'Українська', htmlLang: 'uk' },
+          { code: 'nl', label: 'NL', name: 'Nederlands', htmlLang: 'nl' },
+          { code: 'de', label: 'DE', name: 'Deutsch', htmlLang: 'de' },
+        ].map((item) => (
+          <button
+            key={item.code}
+            type="button"
+            onClick={() => setLang(item.code)}
+            aria-pressed={lang === item.code}
+            aria-label={item.name}
+            lang={item.htmlLang}
+            className={`px-2.5 py-1 rounded-full transition-all duration-300 ${
+              lang === item.code
+                ? 'bg-[#556652] text-white shadow-xs font-semibold'
+                : 'text-[#2C352B] hover:bg-[#E2E8E1]/50'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
 
       {/* Логіка відображення */}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getGuestName } from "./guest";
 
 function MailScreen({ onOpen, lang = "ua" }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,29 +10,38 @@ function MailScreen({ onOpen, lang = "ua" }) {
       names: "Денніс & Олена",
       date: "10 Липня 2027",
       clickText: "Натисніть, щоб відкрити",
+      forGuest: "Для",
     },
     nl: {
       invitation: "Uitnodiging voor het huwelijk",
       names: "Dennis & Olena",
       date: "10 Juli 2027",
       clickText: "Klik om te openen",
+      forGuest: "Voor",
     },
     de: {
       invitation: "Einladung zur Hochzeit",
       names: "Dennis & Olena",
       date: "10 Juli 2027",
       clickText: "Klicken zum Öffnen",
+      forGuest: "Für",
     },
   };
 
   const t = text[lang] || text.ua;
+  const guestName = getGuestName();
 
   const handleOpen = () => {
     if (isOpen) return;
     setIsOpen(true);
+    // Для тих, хто вимкнув анімації в системі, не чекаємо довго
+    const reducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setTimeout(() => {
       onOpen();
-    }, 3200);
+    }, reducedMotion ? 400 : 3200);
   };
 
   return (
@@ -42,7 +52,16 @@ function MailScreen({ onOpen, lang = "ua" }) {
       {/* Головний контейнер конверта */}
       <div
         onClick={handleOpen}
-        className="relative w-full max-w-md aspect-[4/3] cursor-pointer group"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleOpen();
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label={`${t.invitation}: ${t.names}, ${t.date}. ${t.clickText}`}
+        className="relative w-full max-w-md aspect-[4/3] cursor-pointer group rounded-xl"
       >
         {/* ЛЕТЯЧИЙ МЕТЕЛИК */}
         <div
@@ -83,9 +102,14 @@ function MailScreen({ onOpen, lang = "ua" }) {
             {t.names}
           </h1>
           <div className="w-12 h-[1px] bg-[#8A9A86] my-2 opacity-60" />
-          <p className="text-xs tracking-widest text-gray-500 font-light uppercase">
+          <p className="text-xs tracking-widest text-gray-600 font-light uppercase">
             {t.date}
           </p>
+          {guestName && (
+            <p className="mt-3 text-sm font-serif italic text-[#556652]">
+              {t.forGuest}: {guestName}
+            </p>
+          )}
         </div>
 
         {/* БІЧНІ ТА НИЖНІЙ КЛАПАНИ */}
